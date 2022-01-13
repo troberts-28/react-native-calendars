@@ -19,7 +19,7 @@
     "xcode": "open ios/CalendarsExample.xcworkspace/",
     "clean": "rm package-lock.json && rm -rf ./node_modules && npm i",
     "pod-install": "pod install --project-directory=ios",
-    "prepare": "npm run build"
+    "prepare": "npm run build:ts"
   },
   "repository": {
     "type": "git",
