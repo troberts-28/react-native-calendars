@@ -342,6 +342,8 @@ class CalendarList extends Component<CalendarListProps, State> {
   render() {
     const {style, pastScrollRange, futureScrollRange, horizontal, showScrollIndicator} = this.props;
 
+    console.log("EYO");
+
     return (
       <View style={this.style.flatListContainer}>
         <FlatList
