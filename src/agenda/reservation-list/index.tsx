@@ -2,7 +2,7 @@ import isFunction from 'lodash/isFunction';
 import PropTypes from 'prop-types';
 import XDate from 'xdate';
 
-import React, {Component} from 'react';
+import React, {Component, ReactElement} from 'react';
 import {ActivityIndicator, View, FlatList, StyleProp, ViewStyle, TextStyle, NativeSyntheticEvent, NativeScrollEvent, LayoutChangeEvent} from 'react-native';
 
 import {extractComponentProps} from '../../componentUpdater';
@@ -44,6 +44,8 @@ export type ReservationListProps = ReservationProps & {
   refreshing?: boolean;
   /** If provided, a standard RefreshControl will be added for "Pull to Refresh" functionality. Make sure to also set the refreshing prop correctly */
   onRefresh?: () => void;
+
+  listFooterComponent?: ReactElement;
 };
 
 interface DayAgenda {
@@ -88,7 +90,9 @@ class ReservationList extends Component<ReservationListProps, State> {
     /** Set this true while waiting for new data from a refresh */
     refreshing: PropTypes.bool,
     /** If provided, a standard RefreshControl will be added for "Pull to Refresh" functionality. Make sure to also set the refreshing prop correctly */
-    onRefresh: PropTypes.func
+    onRefresh: PropTypes.func,
+
+    listFooterComponent: PropTypes.element
   };
   
   static defaultProps = {
@@ -303,6 +307,7 @@ class ReservationList extends Component<ReservationListProps, State> {
         onScrollEndDrag={this.props.onScrollEndDrag}
         onMomentumScrollBegin={this.props.onMomentumScrollBegin}
         onMomentumScrollEnd={this.props.onMomentumScrollEnd}
+        ListFooterComponent={this.props.listFooterComponent}
       />
     );
   }
