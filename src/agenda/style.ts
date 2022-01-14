@@ -32,7 +32,9 @@ export default function styleConstructor(theme: Theme = {}) {
       height: 24,
       bottom: 0,
       alignItems: 'center',
-      backgroundColor: appStyle.calendarBackground
+      backgroundColor: appStyle.calendarBackground,
+      borderBottomWidth: 1,
+      borderBottomColor: "#C4C4C4"
     },
     weekday: {
       width: 32,
