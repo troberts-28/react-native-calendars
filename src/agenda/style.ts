@@ -33,8 +33,6 @@ export default function styleConstructor(theme: Theme = {}) {
       bottom: 0,
       alignItems: 'center',
       backgroundColor: appStyle.calendarBackground,
-      borderBottomWidth: 1,
-      borderBottomColor: "#C4C4C4"
     },
     weekday: {
       width: 32,
@@ -52,7 +50,9 @@ export default function styleConstructor(theme: Theme = {}) {
     scrollPadStyle: {
       position: 'absolute',
       width: '100%',
-      alignSelf: 'center'
+      alignSelf: 'center',
+      borderBottomWidth: 1,
+      borderBottomColor: "#C4C4C4"
     },
     // @ts-expect-error
     ...(theme['stylesheet.agenda.main'] || {})
