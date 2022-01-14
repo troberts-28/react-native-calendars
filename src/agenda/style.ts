@@ -10,12 +10,12 @@ export default function styleConstructor(theme: Theme = {}) {
   return StyleSheet.create({
     container: {
       flex: 1,
+      borderBottomWidth: 1,
+      borderBottomColor: "#C4C4C4",
       overflow: 'hidden',
     },
     animatedContainer: {
       flex: 1,
-      borderBottomWidth: 1,
-      borderBottomColor: "#C4C4C4"
     },
     knob,
     weekdays,
