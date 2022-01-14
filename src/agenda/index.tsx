@@ -371,7 +371,7 @@ export default class Agenda extends Component<AgendaProps, State> {
     if (!hideKnob) {
       const knobView = renderKnob ? renderKnob() : <View style={this.style.knob}/>;
       knob = !this.state.calendarScrollable || showClosingKnob ? (
-        <View style={this.style.knobContainer}>
+        <View style={[this.style.knobContainer, {borderBottomWidth: 1, borderBottomColor: "#C4C4C4"}]}>
           <View ref={this.knob}>{knobView}</View>
         </View>
       ) : null;
@@ -457,7 +457,7 @@ export default class Agenda extends Component<AgendaProps, State> {
       <View testID={testID} onLayout={this.onLayout} style={[style, this.style.container]}>
         <View style={this.style.reservations}>{this.renderReservations()}</View>
         <Animated.View style={headerStyle}>
-          <Animated.View style={[this.style.animatedContainer, {borderBottomWidth: 1, borderBottomColor: "#C4C4C4"}, {transform: [{translateY: contentTranslate}]}]}>
+          <Animated.View style={[this.style.animatedContainer, {transform: [{translateY: contentTranslate}]}]}>
             {this.renderCalendarList()}
           </Animated.View>
           {this.renderKnob()}
