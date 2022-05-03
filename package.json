@@ -96,14 +96,5 @@
     "transformIgnorePatterns": [
       "node_modules/(?!(@react-native|react-native|react-native-swipe-gestures)/)"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.js": "eslint --cache --fix",
-    "*.{js,css,md}": "prettier --write"
   }
 }
