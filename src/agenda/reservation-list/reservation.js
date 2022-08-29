@@ -34,10 +34,7 @@ class Reservation extends Component {
         const r1 = this.props.item;
         const r2 = nextProps.item;
         let changed = true;
-        if (!d1 && !d2) {
-            changed = false;
-        }
-        else if (d1 && d2) {
+        if (d1 && d2) {
             if (d1.getTime() !== d2.getTime()) {
                 changed = true;
             }
