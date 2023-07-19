@@ -1,10 +1,12 @@
-import React, {useCallback, useMemo, useRef} from 'react';
-import {View, Text, TouchableWithoutFeedback, ViewStyle, TextStyle, Dimensions, StyleSheet} from 'react-native';
 import range from 'lodash/range';
-import {HOUR_BLOCK_HEIGHT} from './Packer';
-import {buildTimeString, calcTimeByPosition} from './helpers/presenter';
+import times from 'lodash/times';
 
-const {width: dimensionWidth} = Dimensions.get('window');
+import React, {useCallback, useMemo, useRef} from 'react';
+import {View, Text, TouchableWithoutFeedback, ViewStyle, TextStyle, StyleSheet} from 'react-native';
+
+import constants from '../commons/constants';
+import {buildTimeString, calcTimeByPosition, calcDateByPosition} from './helpers/presenter';
+import {buildUnavailableHoursBlocks, HOUR_BLOCK_HEIGHT, UnavailableHours} from './Packer';
 
 interface NewEventTime {
   hour: number;
@@ -19,16 +21,37 @@ export interface TimelineHoursProps {
   format24h?: boolean;
   onBackgroundLongPress?: (timeString: string, time: NewEventTime) => void;
   onBackgroundLongPressOut?: (timeString: string, time: NewEventTime) => void;
+  unavailableHours?: UnavailableHours[];
+  unavailableHoursColor?: string;
   styles: {[key: string]: ViewStyle | TextStyle};
+  width: number;
+  numberOfDays: number;
+  timelineLeftInset?: number;
 }
 
+const dimensionWidth = constants.screenWidth;
+const EVENT_DIFF = 20;
+
 const TimelineHours = (props: TimelineHoursProps) => {
-  const {format24h, start = 0, end = 24, date, styles, onBackgroundLongPress, onBackgroundLongPressOut} = props;
+  const {
+    format24h,
+    start = 0,
+    end = 24,
+    date,
+    unavailableHours,
+    unavailableHoursColor,
+    styles,
+    onBackgroundLongPress,
+    onBackgroundLongPressOut,
+    width,
+    numberOfDays = 1,
+    timelineLeftInset = 0
+  } = props;
 
   const lastLongPressEventTime = useRef<NewEventTime>();
   // const offset = this.calendarHeight / (end - start);
   const offset = HOUR_BLOCK_HEIGHT;
-  const EVENT_DIFF = 20;
+  const unavailableHoursBlocks = buildUnavailableHoursBlocks(unavailableHours, {dayStart: start, dayEnd: end});
 
   const hours = useMemo(() => {
     return range(start, end + 1).map(i => {
@@ -52,11 +75,12 @@ const TimelineHours = (props: TimelineHoursProps) => {
   const handleBackgroundPress = useCallback(
     event => {
       const yPosition = event.nativeEvent.locationY;
+      const xPosition = event.nativeEvent.locationX;
       const {hour, minutes} = calcTimeByPosition(yPosition, HOUR_BLOCK_HEIGHT);
+      const dateByPosition = calcDateByPosition(xPosition, timelineLeftInset, numberOfDays, date);
+      lastLongPressEventTime.current = {hour, minutes, date: dateByPosition};
 
-      lastLongPressEventTime.current = {hour, minutes, date};
-
-      const timeString = buildTimeString(hour, minutes, date);
+      const timeString = buildTimeString(hour, minutes, dateByPosition);
       onBackgroundLongPress?.(timeString, lastLongPressEventTime.current);
     },
     [onBackgroundLongPress, date]
@@ -76,28 +100,40 @@ const TimelineHours = (props: TimelineHoursProps) => {
       <TouchableWithoutFeedback onLongPress={handleBackgroundPress} onPressOut={handlePressOut}>
         <View style={StyleSheet.absoluteFillObject} />
       </TouchableWithoutFeedback>
+      {unavailableHoursBlocks.map((block, index) => (
+        <View
+          key={index}
+          style={[
+            styles.unavailableHoursBlock,
+            block,
+            unavailableHoursColor ? {backgroundColor: unavailableHoursColor} : undefined,
+            {left: timelineLeftInset}
+          ]}
+        ></View>
+      ))}
+
       {hours.map(({timeText, time}, index) => {
         return (
           <React.Fragment key={time}>
-            <Text key={`timeLabel${time}`} style={[styles.timeLabel, {top: offset * index - 6}]}>
+            <Text key={`timeLabel${time}`} style={[styles.timeLabel, {top: offset * index - 6, width: timelineLeftInset - 16}]}>
               {timeText}
             </Text>
             {time === start ? null : (
               <View
                 key={`line${time}`}
-                style={[styles.line, {top: offset * index, width: dimensionWidth - EVENT_DIFF}]}
+                style={[styles.line, {top: offset * index, width: dimensionWidth - EVENT_DIFF, left: timelineLeftInset - 16}]}
               />
             )}
             {
               <View
                 key={`lineHalf${time}`}
-                style={[styles.line, {top: offset * (index + 0.5), width: dimensionWidth - EVENT_DIFF}]}
+                style={[styles.line, {top: offset * (index + 0.5), width: dimensionWidth - EVENT_DIFF, left: timelineLeftInset - 16}]}
               />
             }
           </React.Fragment>
         );
       })}
-      <View style={styles.verticalLine}/>
+      {times(numberOfDays, (index) => <View key={index} style={[styles.verticalLine, {right: (index + 1) * width / numberOfDays}]} />)}
     </>
   );
 };
