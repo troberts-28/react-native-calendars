@@ -1,82 +1,60 @@
-import PropTypes from 'prop-types';
-import memoize from 'memoize-one';
-import React, { Component } from 'react';
-import { Text, View } from 'react-native';
-import { extractComponentProps } from '../componentUpdater';
-import { formatNumbers } from '../dateutils';
-import Calendar from '../calendar';
+import React, { useRef, useMemo, useCallback } from 'react';
+import { Text } from 'react-native';
+import { toMarkingFormat } from '../interface';
+import { extractCalendarProps } from '../componentUpdater';
 import styleConstructor from './style';
-import { getCalendarDateString } from '../services';
-class CalendarListItem extends Component {
-    static displayName = 'CalendarListItem';
-    static propTypes = {
-        ...Calendar.propTypes,
-        item: PropTypes.any,
-        calendarWidth: PropTypes.number,
-        calendarHeight: PropTypes.number,
-        horizontal: PropTypes.bool
-    };
-    static defaultProps = {
-        hideArrows: true,
-        hideExtraDays: true
-    };
-    style;
-    constructor(props) {
-        super(props);
-        this.style = styleConstructor(props.theme);
-    }
-    shouldComponentUpdate(nextProps) {
-        const r1 = this.props.item;
-        const r2 = nextProps.item;
-        return r1.toString('yyyy MM') !== r2.toString('yyyy MM') || !!(r2.propBump && r2.propBump !== r1.propBump);
-    }
-    onPressArrowLeft = (_, month) => {
-        const { onPressArrowLeft, scrollToMonth } = this.props;
-        const monthClone = month.clone();
-        if (onPressArrowLeft) {
-            onPressArrowLeft(_, monthClone);
-        }
-        else if (scrollToMonth) {
-            const currentMonth = monthClone.getMonth();
-            monthClone.addMonths(-1);
-            // Make sure we actually get the previous month, not just 30 days before currentMonth.
-            while (monthClone.getMonth() === currentMonth) {
-                monthClone.setDate(monthClone.getDate() - 1);
+import Calendar from '../calendar';
+const CalendarListItem = React.memo((props) => {
+    const { item, theme, scrollToMonth, horizontal, calendarHeight, calendarWidth, style: propsStyle, headerStyle, onPressArrowLeft, onPressArrowRight, visible } = props;
+    const style = useRef(styleConstructor(theme));
+    const calendarProps = extractCalendarProps(props);
+    const dateString = toMarkingFormat(item);
+    const calendarStyle = useMemo(() => {
+        return [
+            {
+                width: calendarWidth,
+                minHeight: calendarHeight
+            },
+            style.current.calendar,
+            propsStyle
+        ];
+    }, [calendarWidth, calendarHeight, propsStyle]);
+    const textStyle = useMemo(() => {
+        return [calendarStyle, style.current.placeholderText];
+    }, [calendarStyle]);
+    const _onPressArrowLeft = useCallback((method, month) => {
+        const monthClone = month?.clone();
+        if (monthClone) {
+            if (onPressArrowLeft) {
+                onPressArrowLeft(method, monthClone);
             }
-            scrollToMonth(monthClone);
+            else if (scrollToMonth) {
+                const currentMonth = monthClone.getMonth();
+                monthClone.addMonths(-1);
+                // Make sure we actually get the previous month, not just 30 days before currentMonth.
+                while (monthClone.getMonth() === currentMonth) {
+                    monthClone.setDate(monthClone.getDate() - 1);
+                }
+                scrollToMonth(monthClone);
+            }
         }
-    };
-    onPressArrowRight = (_, month) => {
-        const { onPressArrowRight, scrollToMonth } = this.props;
-        const monthClone = month.clone();
-        if (onPressArrowRight) {
-            onPressArrowRight(_, monthClone);
+    }, [onPressArrowLeft, scrollToMonth]);
+    const _onPressArrowRight = useCallback((method, month) => {
+        const monthClone = month?.clone();
+        if (monthClone) {
+            if (onPressArrowRight) {
+                onPressArrowRight(method, monthClone);
+            }
+            else if (scrollToMonth) {
+                monthClone.addMonths(1);
+                scrollToMonth(monthClone);
+            }
         }
-        else if (scrollToMonth) {
-            monthClone.addMonths(1);
-            scrollToMonth(monthClone);
-        }
-    };
-    getCalendarStyle = memoize((width, height, style) => {
-        return [{ width, minHeight: height }, this.style.calendar, style];
-    });
-    render() {
-        const { item, horizontal, calendarHeight, calendarWidth, testID, style, headerStyle, onPressArrowLeft, onPressArrowRight, 
-        // @ts-expect-error
-        context } = this.props;
-        const calendarProps = extractComponentProps(Calendar, this.props);
-        const calStyle = this.getCalendarStyle(calendarWidth, calendarHeight, style);
-        if (item.getTime) {
-            return (<Calendar {...calendarProps} testID={testID} current={getCalendarDateString(item.toString())} style={calStyle} headerStyle={horizontal ? headerStyle : undefined} disableMonthChange onPressArrowLeft={horizontal ? this.onPressArrowLeft : onPressArrowLeft} onPressArrowRight={horizontal ? this.onPressArrowRight : onPressArrowRight} context={context}/>);
-        }
-        else {
-            const text = formatNumbers(item.toString());
-            return (<View style={[{ height: calendarHeight, width: calendarWidth }, this.style.placeholder]}>
-          <Text allowFontScaling={false} style={this.style.placeholderText}>
-            {text}
-          </Text>
-        </View>);
-        }
+    }, [onPressArrowRight, scrollToMonth]);
+    if (!visible) {
+        return (<Text style={textStyle}>{dateString}</Text>);
     }
-}
+    return (<Calendar hideArrows={true} hideExtraDays={true} {...calendarProps} current={dateString} style={calendarStyle} headerStyle={horizontal ? headerStyle : undefined} disableMonthChange onPressArrowLeft={horizontal ? _onPressArrowLeft : onPressArrowLeft} onPressArrowRight={horizontal ? _onPressArrowRight : onPressArrowRight}/>);
+});
 export default CalendarListItem;
+CalendarListItem.displayName = 'CalendarListItem';

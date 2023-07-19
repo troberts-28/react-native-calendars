@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import XDate from 'xdate';
-import { Component, ReactElement } from 'react';
+import React, { Component, ReactElement } from 'react';
 import { StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent, LayoutChangeEvent } from 'react-native';
 import { ReservationProps } from './reservation';
-import { AgendaEntry, AgendaSchedule } from '../../types';
+import { AgendaEntry, AgendaSchedule, DayAgenda } from '../../types';
 export declare type ReservationListProps = ReservationProps & {
     /** the list of items that have to be displayed in agenda. If you want to render item as empty date
     the value of date key kas to be an empty array []. If there exists no value for date key it is
@@ -18,7 +18,7 @@ export declare type ReservationListProps = ReservationProps & {
     /** specify what should be rendered instead of ActivityIndicator */
     renderEmptyData?: () => JSX.Element;
     style?: StyleProp<ViewStyle>;
-    /** onScroll ListView event */
+    /** onScroll FlatList event */
     onScroll?: (yOffset: number) => void;
     /** Called when the user begins dragging the agenda list **/
     onScrollBeginDrag?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
@@ -35,46 +35,31 @@ export declare type ReservationListProps = ReservationProps & {
     /** If provided, a standard RefreshControl will be added for "Pull to Refresh" functionality. Make sure to also set the refreshing prop correctly */
     onRefresh?: () => void;
     listFooterComponent?: ReactElement;
+    /** Extractor for underlying FlatList. Ensure that this is unique per item, or else scrolling may have duplicated and / or missing items.  */
+    reservationsKeyExtractor?: (item: DayAgenda, index: number) => string;
 };
-interface DayAgenda {
-    reservation?: AgendaEntry;
-    date?: XDate;
-}
 interface State {
     reservations: DayAgenda[];
 }
 declare class ReservationList extends Component<ReservationListProps, State> {
     static displayName: string;
     static propTypes: {
-        /** the list of items that have to be displayed in agenda. If you want to render item as empty date
-        the value of date key kas to be an empty array []. If there exists no value for date key it is
-        considered that the date in question is not yet loaded */
         items: PropTypes.Requireable<object>;
         selectedDay: PropTypes.Requireable<XDate>;
         topDay: PropTypes.Requireable<XDate>;
-        /** Show items only for the selected date. Default = false */
-        showOnlySelectedDayItems: PropTypes.Requireable<boolean>;
-        /** callback that gets called when day changes while scrolling agenda list */
         onDayChange: PropTypes.Requireable<(...args: any[]) => any>;
-        /** specify what should be rendered instead of ActivityIndicator */
+        showOnlySelectedDayItems: PropTypes.Requireable<boolean>;
         renderEmptyData: PropTypes.Requireable<(...args: any[]) => any>;
-        /** onScroll ListView event */
         onScroll: PropTypes.Requireable<(...args: any[]) => any>;
-        /** Called when the user begins dragging the agenda list **/
         onScrollBeginDrag: PropTypes.Requireable<(...args: any[]) => any>;
-        /** Called when the user stops dragging the agenda list **/
         onScrollEndDrag: PropTypes.Requireable<(...args: any[]) => any>;
-        /** Called when the momentum scroll starts for the agenda list **/
         onMomentumScrollBegin: PropTypes.Requireable<(...args: any[]) => any>;
-        /** Called when the momentum scroll stops for the agenda list **/
         onMomentumScrollEnd: PropTypes.Requireable<(...args: any[]) => any>;
-        /** A RefreshControl component, used to provide pull-to-refresh functionality for the ScrollView */
         refreshControl: PropTypes.Requireable<PropTypes.ReactElementLike>;
-        /** Set this true while waiting for new data from a refresh */
         refreshing: PropTypes.Requireable<boolean>;
-        /** If provided, a standard RefreshControl will be added for "Pull to Refresh" functionality. Make sure to also set the refreshing prop correctly */
-        onRefresh: PropTypes.Requireable<(...args: any[]) => any>;
         listFooterComponent: PropTypes.Requireable<PropTypes.ReactElementLike>;
+        onRefresh: PropTypes.Requireable<(...args: any[]) => any>;
+        reservationsKeyExtractor: PropTypes.Requireable<(...args: any[]) => any>;
         date: PropTypes.Requireable<any>;
         item: PropTypes.Requireable<any>;
         theme: PropTypes.Requireable<object>;
@@ -114,8 +99,8 @@ declare class ReservationList extends Component<ReservationListProps, State> {
     renderRow: ({ item, index }: {
         item: DayAgenda;
         index: number;
-    }) => JSX.Element;
-    keyExtractor: (_item: DayAgenda, index: number) => string;
-    render(): JSX.Element;
+    }) => React.JSX.Element;
+    keyExtractor: (item: DayAgenda, index: number) => string;
+    render(): React.JSX.Element;
 }
 export default ReservationList;

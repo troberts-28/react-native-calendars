@@ -1,10 +1,3 @@
-export declare const isRTL: boolean;
-export declare const isAndroid: boolean;
-export declare const isIos: boolean;
-export declare const screenWidth: number;
-export declare const screenHeight: number;
-export declare const screenAspectRatio: number;
-export declare const isTablet: boolean;
 export declare const todayString = "today";
 export declare enum UpdateSources {
     CALENDAR_INIT = "calendarInit",

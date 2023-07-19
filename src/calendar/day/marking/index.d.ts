@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React from 'react';
 import { ViewStyle, TextStyle, StyleProp } from 'react-native';
 import { Theme, MarkingTypes } from '../../../types';
 import { DotProps } from '../dot';
@@ -46,17 +46,9 @@ export interface MarkingProps extends DotProps {
     accessibilityLabel?: string;
     customStyles?: CustomStyle;
 }
-export default class Marking extends Component<MarkingProps> {
-    static displayName: string;
-    static markings: typeof Markings;
-    style: any;
-    constructor(props: MarkingProps);
-    shouldComponentUpdate(nextProps: MarkingProps): boolean;
-    getItems(items?: DOT[] | PERIOD[]): JSX.Element[] | undefined;
-    renderMarkingByType(): JSX.Element;
-    renderMultiMarkings(containerStyle: object, items?: DOT[] | PERIOD[]): JSX.Element;
-    renderPeriod(index: number, item: any): JSX.Element;
-    renderDot(index?: number, item?: any): JSX.Element;
-    render(): JSX.Element;
-}
-export {};
+declare const Marking: {
+    (props: MarkingProps): React.JSX.Element;
+    displayName: string;
+    markings: typeof Markings;
+};
+export default Marking;

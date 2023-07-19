@@ -7,6 +7,8 @@ declare const _default: {
         AGENDA: string;
         EXPANDABLE_CALENDAR: string;
         WEEK_CALENDAR: string;
+        TIMELINE_CALENDAR: string;
+        PLAYGROUND: string;
     };
     calendars: {
         CONTAINER: string;

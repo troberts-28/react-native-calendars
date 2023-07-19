@@ -31,25 +31,24 @@ export default function styleConstructor(theme = {}) {
             alignItems: 'center',
             backgroundColor: appStyle.calendarBackground,
         },
-        weekday: {
+        dayHeader: {
             width: 32,
             textAlign: 'center',
-            color: appStyle.textSectionTitleColor,
             fontSize: appStyle.textDayHeaderFontSize,
             fontFamily: appStyle.textDayHeaderFontFamily,
-            fontWeight: appStyle.textDayHeaderFontWeight
+            fontWeight: appStyle.textDayHeaderFontWeight,
+            color: appStyle.textSectionTitleColor
         },
         reservations: {
             flex: 1,
             marginTop: 104,
-            backgroundColor: appStyle.backgroundColor
+            backgroundColor: appStyle.reservationsBackgroundColor || appStyle.backgroundColor //TODO: remove 2nd in V2
         },
         scrollPadStyle: {
             position: 'absolute',
             width: '100%',
             alignSelf: 'center'
         },
-        // @ts-expect-error
         ...(theme['stylesheet.agenda.main'] || {})
     });
 }

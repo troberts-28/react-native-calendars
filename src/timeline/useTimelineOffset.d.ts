@@ -8,7 +8,6 @@ interface UseTimelineOffsetProps {
 declare const _default: (props: UseTimelineOffsetProps) => {
     scrollEvents: {
         onScrollEndDrag: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
-        onMomentumScrollBegin: () => void;
         onMomentumScrollEnd: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
     };
 };

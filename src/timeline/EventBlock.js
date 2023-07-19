@@ -1,7 +1,8 @@
+import XDate from 'xdate';
 import React, { useCallback, useMemo } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import XDate from 'xdate';
 const TEXT_LINE_HEIGHT = 17;
+const EVENT_DEFAULT_COLOR = '#add8e6';
 const EventBlock = (props) => {
     const { index, event, renderEvent, onPress, format24h, styles } = props;
     // Fixing the number of lines for the event title makes this calculation easier.
@@ -14,7 +15,7 @@ const EventBlock = (props) => {
             height: event.height,
             width: event.width,
             top: event.top,
-            backgroundColor: event.color ? event.color : '#add8e6'
+            backgroundColor: event.color ? event.color : EVENT_DEFAULT_COLOR
         };
     }, [event]);
     const _onPress = useCallback(() => {

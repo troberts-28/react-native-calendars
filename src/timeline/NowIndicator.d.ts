@@ -1,10 +1,11 @@
-/// <reference types="react" />
+import React from 'react';
 import { TextStyle, ViewStyle } from 'react-native';
-export { HOUR_BLOCK_HEIGHT } from './Packer';
 export interface NowIndicatorProps {
     styles: {
         [key: string]: ViewStyle | TextStyle;
     };
+    width: number;
+    left: number;
 }
-declare const NowIndicator: (props: NowIndicatorProps) => JSX.Element;
+declare const NowIndicator: (props: NowIndicatorProps) => React.JSX.Element;
 export default NowIndicator;

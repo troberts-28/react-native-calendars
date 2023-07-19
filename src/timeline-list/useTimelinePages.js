@@ -1,16 +1,25 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import inRange from 'lodash/inRange';
 import times from 'lodash/times';
 import debounce from 'lodash/debounce';
 import constants from '../commons/constants';
 import { generateDay } from '../dateutils';
-const PAGES_COUNT = 100;
-const NEAR_EDGE_THRESHOLD = 10;
+export const PAGES_COUNT = 100;
+export const NEAR_EDGE_THRESHOLD = 10;
 export const INITIAL_PAGE = Math.floor(PAGES_COUNT / 2);
-const UseTimelinePages = ({ date, listRef }) => {
-    const pagesRef = useRef(times(PAGES_COUNT, i => generateDay(date, i - Math.floor(PAGES_COUNT / 2))));
+const UseTimelinePages = ({ date, listRef, numberOfDays }) => {
+    const pagesRef = useRef(times(PAGES_COUNT, i => {
+        return generateDay(date, numberOfDays * (i - Math.floor(PAGES_COUNT / 2)));
+    }));
     const [pages, setPages] = useState(pagesRef.current);
     const shouldResetPages = useRef(false);
+    useEffect(() => {
+        const updatedDays = times(PAGES_COUNT, i => {
+            return generateDay(date, numberOfDays * (i - Math.floor(PAGES_COUNT / 2)));
+        });
+        pagesRef.current = updatedDays;
+        setPages(updatedDays);
+    }, [numberOfDays]);
     const isOutOfRange = useCallback((index) => {
         return !inRange(index, 0, PAGES_COUNT);
     }, []);
@@ -24,7 +33,9 @@ const UseTimelinePages = ({ date, listRef }) => {
         listRef.current?.scrollToOffset(pageIndex * constants.screenWidth, 0, false);
     };
     const resetPages = (date) => {
-        pagesRef.current = times(PAGES_COUNT, i => generateDay(date, i - Math.floor(PAGES_COUNT / 2)));
+        pagesRef.current = times(PAGES_COUNT, i => {
+            return generateDay(date, numberOfDays * (i - Math.floor(PAGES_COUNT / 2)));
+        });
         setPages(pagesRef.current);
         setTimeout(() => {
             scrollToPage(INITIAL_PAGE);

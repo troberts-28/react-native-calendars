@@ -15,7 +15,7 @@ export default function getStyle(theme = {}) {
             justifyContent: 'center'
         },
         placeholderText: {
-            fontSize: 30,
+            fontSize: 20,
             fontWeight: '200',
             color: appStyle.dayTextColor
         },
@@ -29,10 +29,8 @@ export default function getStyle(theme = {}) {
             right: 0,
             top: 0,
             backgroundColor: appStyle.calendarBackground,
-            paddingLeft: 15,
-            paddingRight: 15
+            paddingHorizontal: 15
         },
-        // @ts-expect-error
         ...(theme['stylesheet.calendar-list.main'] || {})
     });
 }

@@ -1,5 +1,6 @@
 import { Theme } from '../types';
 export declare const HEADER_HEIGHT = 68;
+export declare const KNOB_CONTAINER_HEIGHT = 24;
 export default function styleConstructor(theme?: Theme): {
     containerShadow: {
         backgroundColor: string;
@@ -70,19 +71,19 @@ export default function styleConstructor(theme?: Theme): {
         paddingBottom: number;
         fontSize: number;
         fontFamily: string;
-        fontWeight: "normal" | "bold" | "100" | "200" | "300" | "400" | "500" | "600" | "700" | "800" | "900";
+        fontWeight: "300" | "600" | "normal" | "bold" | "100" | "200" | "400" | "500" | "700" | "800" | "900";
         color: string;
     };
     weekDayNames: {
         flexDirection: "row";
         justifyContent: "space-between";
     };
-    weekday: {
+    dayHeader: {
         width: number;
         textAlign: "center";
         fontSize: number;
         fontFamily: string;
-        fontWeight: "normal" | "bold" | "100" | "200" | "300" | "400" | "500" | "600" | "700" | "800" | "900" | undefined;
+        fontWeight: "300" | "600" | "normal" | "bold" | "100" | "200" | "400" | "500" | "700" | "800" | "900" | undefined;
         color: string;
     };
     monthView: {
@@ -112,6 +113,9 @@ export default function styleConstructor(theme?: Theme): {
         flexDirection: "row";
         justifyContent: "space-around";
     };
+    partialWeek: {
+        paddingRight: number;
+    };
     dayContainer: {
         flex: number;
         alignItems: "center";
@@ -119,19 +123,14 @@ export default function styleConstructor(theme?: Theme): {
     emptyDayContainer: {
         flex: number;
     };
-    dayHeader: {
-        width: number;
-        textAlign: "center";
-        fontSize: number;
-        fontFamily: string;
-        fontWeight: "normal" | "bold" | "100" | "200" | "300" | "400" | "500" | "600" | "700" | "800" | "900" | undefined;
-        color: string;
-    };
     arrowImage: {
         tintColor: string;
         transform: {
             scaleX: number;
         }[] | undefined;
+    };
+    contextWrapper: {
+        flex: number;
     };
     todayButtonContainer: {
         alignItems: "flex-start" | "flex-end";
@@ -181,7 +180,7 @@ export default function styleConstructor(theme?: Theme): {
     todayButtonText: {
         color: string;
         fontSize: number;
-        fontWeight: "normal" | "bold" | "100" | "200" | "300" | "400" | "500" | "600" | "700" | "800" | "900";
+        fontWeight: "300" | "600" | "normal" | "bold" | "100" | "200" | "400" | "500" | "700" | "800" | "900";
         fontFamily: string;
     };
     todayButtonImage: {

@@ -1,7 +1,6 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect } from 'react';
 export default (props) => {
     const { onChangeOffset, scrollOffset, scrollViewRef } = props;
-    const inMomentum = useRef(false);
     useEffect(() => {
         // NOTE: The main reason for this feature is to sync the offset
         // between all of the timelines in the TimelineList component
@@ -14,23 +13,17 @@ export default (props) => {
     }, [scrollOffset]);
     const onScrollEndDrag = useCallback((event) => {
         const offset = event.nativeEvent.contentOffset.y;
-        setTimeout(() => {
-            if (!inMomentum.current) {
-                onChangeOffset?.(offset);
-            }
-        }, 0);
-    }, []);
-    const onMomentumScrollBegin = useCallback(() => {
-        inMomentum.current = true;
+        const velocity = event.nativeEvent.velocity?.y;
+        if (velocity === 0) {
+            onChangeOffset?.(offset);
+        }
     }, []);
     const onMomentumScrollEnd = useCallback((event) => {
-        inMomentum.current = false;
         onChangeOffset?.(event.nativeEvent.contentOffset.y);
-    }, [onChangeOffset]);
+    }, []);
     return {
         scrollEvents: {
             onScrollEndDrag,
-            onMomentumScrollBegin,
             onMomentumScrollEnd
         }
     };

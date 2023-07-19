@@ -1,11 +1,11 @@
 import { Theme } from '../types';
-export declare const HOURS_SIDEBAR_WIDTH = 72;
 export default function styleConstructor(theme: Theme | undefined, calendarHeight: number): {
     container: {
-        flex: number;
         backgroundColor: string;
     };
     contentStyle: {
+        flexDirection: "row";
+        height: number;
         backfaceVisibility?: "visible" | "hidden" | undefined;
         backgroundColor: import("react-native").ColorValue;
         borderBottomColor?: import("react-native").ColorValue | undefined;
@@ -31,12 +31,11 @@ export default function styleConstructor(theme: Theme | undefined, calendarHeigh
         borderTopWidth?: number | undefined;
         borderWidth?: number | undefined;
         opacity?: number | undefined;
-        testID?: string | undefined;
         elevation?: number | undefined;
         alignContent?: "center" | "flex-start" | "flex-end" | "stretch" | "space-around" | "space-between" | undefined;
         alignItems?: import("react-native").FlexAlignType | undefined;
-        alignSelf?: import("react-native").FlexAlignType | "auto" | undefined;
-        aspectRatio?: number | undefined;
+        alignSelf?: "auto" | import("react-native").FlexAlignType | undefined;
+        aspectRatio?: string | number | undefined;
         borderEndWidth?: string | number | undefined;
         borderStartWidth?: string | number | undefined;
         bottom?: string | number | undefined;
@@ -44,11 +43,12 @@ export default function styleConstructor(theme: Theme | undefined, calendarHeigh
         end?: string | number | undefined;
         flex?: number | undefined;
         flexBasis?: string | number | undefined;
-        flexDirection?: "row" | "column" | "row-reverse" | "column-reverse" | undefined;
+        rowGap?: number | undefined;
+        gap?: number | undefined;
+        columnGap?: number | undefined;
         flexGrow?: number | undefined;
         flexShrink?: number | undefined;
         flexWrap?: "wrap" | "nowrap" | "wrap-reverse" | undefined;
-        height: string | number;
         justifyContent?: "center" | "flex-start" | "flex-end" | "space-around" | "space-between" | "space-evenly" | undefined;
         left?: string | number | undefined;
         margin?: string | number | undefined;
@@ -80,7 +80,7 @@ export default function styleConstructor(theme: Theme | undefined, calendarHeigh
         top?: string | number | undefined;
         width?: string | number | undefined;
         zIndex?: number | undefined;
-        direction?: "inherit" | "ltr" | "rtl" | undefined;
+        direction?: "ltr" | "rtl" | "inherit" | undefined;
         shadowColor?: import("react-native").ColorValue | undefined;
         shadowOffset?: {
             width: number;
@@ -96,88 +96,26 @@ export default function styleConstructor(theme: Theme | undefined, calendarHeigh
         translateX?: number | undefined;
         translateY?: number | undefined;
     };
-    header: {
-        paddingHorizontal: number;
-        height: number;
-        borderTopWidth: number;
-        borderBottomWidth: number;
-        borderColor: string;
-        backgroundColor: string;
-        flexDirection: "row";
-        justifyContent: "space-between";
-        alignItems: "stretch";
-    };
-    headerTextContainer: {
-        justifyContent: "center";
-    };
-    headerText: {
-        fontSize: number;
-    };
-    arrow: {
-        width: number;
-        height: number;
-        resizeMode: "contain";
-    };
-    arrowButton: {
-        width: number;
-        alignItems: "center";
-        justifyContent: "center";
-    };
-    event: {
-        position: "absolute";
-        backgroundColor: string;
-        borderColor: string;
-        borderWidth: number;
-        paddingLeft: number;
-        minHeight: number;
-        flex: number;
-        opacity: number;
-        paddingTop: number;
-        paddingBottom: number;
-        flexDirection: "column";
-        alignItems: "flex-start";
-        overflow: "hidden";
-    };
-    eventTitle: {
-        color: string;
-        fontWeight: "600";
-        minHeight: number;
-    };
-    eventSummary: {
-        color: string;
-        fontSize: number;
-        flexWrap: "wrap";
-    };
-    eventTimes: {
-        marginTop: number;
-        fontSize: number;
-        fontWeight: "bold";
-        color: string;
-        flexWrap: "wrap";
-    };
     line: {
-        height: number;
         position: "absolute";
-        left: number;
+        height: number;
         backgroundColor: string;
     };
     verticalLine: {
         position: "absolute";
-        width: number;
         height: string;
+        width: number;
         backgroundColor: string;
-        left: number;
     };
     nowIndicator: {
         position: "absolute";
-        left: number;
         right: number;
     };
     nowIndicatorLine: {
-        height: number;
         position: "absolute";
         left: number;
         right: number;
+        height: number;
         backgroundColor: string;
     };
     nowIndicatorKnob: {
@@ -193,10 +131,49 @@ export default function styleConstructor(theme: Theme | undefined, calendarHeigh
         position: "absolute";
         color: string;
         fontSize: number;
-        fontFamily: string;
         fontWeight: "500";
+        fontFamily: string;
         paddingLeft: number;
         textAlign: "center";
-        width: number;
+    };
+    unavailableHoursBlock: {
+        position: "absolute";
+        right: number;
+        backgroundColor: string;
+    };
+    event: {
+        position: "absolute";
+        flex: number;
+        flexDirection: "column";
+        alignItems: "flex-start";
+        overflow: "hidden";
+        minHeight: number;
+        opacity: number;
+        paddingLeft: number;
+        paddingTop: number;
+        paddingBottom: number;
+        backgroundColor: string;
+        borderColor: string;
+        borderWidth: number;
+    };
+    eventTitle: {
+        minHeight: number;
+        color: string;
+        fontWeight: "600";
+    };
+    eventSummary: {
+        flexWrap: "wrap";
+        color: string;
+        fontSize: number;
+    };
+    eventTimes: {
+        flexWrap: "wrap";
+        marginTop: number;
+        color: string;
+        fontSize: number;
+        fontWeight: "bold";
+    };
+    eventsContainer: {
+        flex: number;
     };
 };

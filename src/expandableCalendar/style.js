@@ -1,7 +1,8 @@
 import { StyleSheet, Platform } from 'react-native';
 import * as defaultStyle from '../style';
-const commons = require('./commons');
+import constants from '../commons/constants';
 export const HEADER_HEIGHT = 68;
+export const KNOB_CONTAINER_HEIGHT = 24;
 export default function styleConstructor(theme = {}) {
     const appStyle = { ...defaultStyle, ...theme };
     return StyleSheet.create({
@@ -30,7 +31,7 @@ export default function styleConstructor(theme = {}) {
             position: 'absolute',
             left: 0,
             right: 0,
-            height: 24,
+            height: KNOB_CONTAINER_HEIGHT,
             bottom: 0,
             alignItems: 'center',
             justifyContent: 'center',
@@ -40,7 +41,7 @@ export default function styleConstructor(theme = {}) {
             width: 40,
             height: 4,
             borderRadius: 3,
-            backgroundColor: '#e8ecf0'
+            backgroundColor: appStyle.expandableKnobColor
         },
         sectionText: {
             fontWeight: 'bold',
@@ -74,7 +75,7 @@ export default function styleConstructor(theme = {}) {
             flexDirection: 'row',
             justifyContent: 'space-between'
         },
-        weekday: {
+        dayHeader: {
             width: 32,
             textAlign: 'center',
             fontSize: appStyle.textDayHeaderFontSize,
@@ -89,7 +90,7 @@ export default function styleConstructor(theme = {}) {
             position: 'absolute',
             left: 0,
             right: 0,
-            top: HEADER_HEIGHT + (commons.isAndroid ? 8 : 4), // align row on top of calendar's first row
+            top: HEADER_HEIGHT + (constants.isAndroid ? 8 : 9), // align row on top of calendar's first row
         },
         hidden: {
             opacity: 0
@@ -109,6 +110,9 @@ export default function styleConstructor(theme = {}) {
             flexDirection: 'row',
             justifyContent: 'space-around'
         },
+        partialWeek: {
+            paddingRight: 0
+        },
         dayContainer: {
             flex: 1,
             alignItems: 'center'
@@ -116,17 +120,12 @@ export default function styleConstructor(theme = {}) {
         emptyDayContainer: {
             flex: 1
         },
-        dayHeader: {
-            width: 32,
-            textAlign: 'center',
-            fontSize: appStyle.textDayHeaderFontSize,
-            fontFamily: appStyle.textDayHeaderFontFamily,
-            fontWeight: appStyle.textDayHeaderFontWeight,
-            color: appStyle.textSectionTitleColor
-        },
         arrowImage: {
             tintColor: appStyle.arrowColor,
-            transform: commons.isRTL ? [{ scaleX: -1 }] : undefined
+            transform: constants.isRTL ? [{ scaleX: -1 }] : undefined
+        },
+        contextWrapper: {
+            flex: 1
         },
         todayButtonContainer: {
             alignItems: appStyle.todayButtonPosition === 'right' ? 'flex-end' : 'flex-start',
@@ -136,9 +135,9 @@ export default function styleConstructor(theme = {}) {
             bottom: 0
         },
         todayButton: {
-            height: commons.isTablet ? 40 : 28,
-            paddingHorizontal: commons.isTablet ? 20 : 12,
-            borderRadius: commons.isTablet ? 20 : 14,
+            height: constants.isTablet ? 40 : 28,
+            paddingHorizontal: constants.isTablet ? 20 : 12,
+            borderRadius: constants.isTablet ? 20 : 14,
             flexDirection: appStyle.todayButtonPosition === 'right' ? 'row-reverse' : 'row',
             justifyContent: 'center',
             alignItems: 'center',
@@ -157,7 +156,7 @@ export default function styleConstructor(theme = {}) {
         },
         todayButtonText: {
             color: appStyle.todayButtonTextColor,
-            fontSize: commons.isTablet ? appStyle.todayButtonFontSize + 2 : appStyle.todayButtonFontSize,
+            fontSize: constants.isTablet ? appStyle.todayButtonFontSize + 2 : appStyle.todayButtonFontSize,
             fontWeight: appStyle.todayButtonFontWeight,
             fontFamily: appStyle.todayButtonFontFamily
         },

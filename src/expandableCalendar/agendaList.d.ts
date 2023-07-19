@@ -1,7 +1,10 @@
+import PropTypes from 'prop-types';
 import React from 'react';
-import { SectionListProps, DefaultSectionT, ViewStyle } from 'react-native';
+import { SectionListProps, DefaultSectionT, ViewStyle, TextProps } from 'react-native';
 import { Theme } from '../types';
 export interface AgendaListProps extends SectionListProps<any, DefaultSectionT> {
+    /** Specify theme properties to override specific styles for calendar parts */
+    theme?: Theme;
     /** day format in section title. Formatting values: http://arshaw.com/xdate/#Formatting */
     dayFormat?: string;
     /** a function to custom format the section header's title */
@@ -19,8 +22,39 @@ export interface AgendaListProps extends SectionListProps<any, DefaultSectionT> 
     viewOffset?: number;
     /** enable scrolling the agenda list to the next date with content when pressing a day without content */
     scrollToNextEvent?: boolean;
-    theme?: Theme;
-    context?: any;
+    /**
+     * @experimental
+     * If defined, uses InfiniteList instead of SectionList. This feature is experimental and subject to change.
+     */
+    infiniteListProps?: {
+        itemHeight?: number;
+        titleHeight?: number;
+        visibleIndicesChangedDebounce?: number;
+        renderFooter?: () => React.ReactElement | null;
+    };
 }
-declare const _default: React.ComponentClass<AgendaListProps, any>;
-export default _default;
+/**
+ * @description: AgendaList component
+ * @note: Should be wrapped with 'CalendarProvider'
+ * @extends: SectionList
+ * @example: https://github.com/wix/react-native-calendars/blob/master/example/src/screens/expandableCalendar.js
+ */
+declare const AgendaList: {
+    (props: AgendaListProps): React.JSX.Element;
+    displayName: string;
+    propTypes: {
+        dayFormat: PropTypes.Requireable<string>;
+        dayFormatter: PropTypes.Requireable<(...args: any[]) => any>;
+        useMoment: PropTypes.Requireable<boolean>;
+        markToday: PropTypes.Requireable<boolean>;
+        sectionStyle: PropTypes.Requireable<number | object>;
+        avoidDateUpdates: PropTypes.Requireable<boolean>;
+    };
+};
+interface AgendaSectionHeaderProps {
+    title?: string;
+    onLayout?: TextProps['onLayout'];
+    style: TextProps['style'];
+}
+export declare const AgendaSectionHeader: React.MemoExoticComponent<(props: AgendaSectionHeaderProps) => React.JSX.Element>;
+export default AgendaList;

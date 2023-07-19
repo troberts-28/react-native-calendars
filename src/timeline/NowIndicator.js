@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View } from 'react-native';
+import { calcTimeOffset } from './helpers/presenter';
 import { HOUR_BLOCK_HEIGHT } from './Packer';
-export { HOUR_BLOCK_HEIGHT } from './Packer';
 const NowIndicator = (props) => {
-    const { styles } = props;
-    const now = new Date();
-    const hour = now.getHours();
-    const minutes = now.getMinutes();
-    const indicatorPosition = (hour + minutes / 60) * HOUR_BLOCK_HEIGHT;
-    return (<View style={[styles.nowIndicator, { top: indicatorPosition }]}>
-      <View style={styles.nowIndicatorLine}/>
+    const { styles, width, left } = props;
+    const indicatorPosition = calcTimeOffset(HOUR_BLOCK_HEIGHT);
+    const nowIndicatorStyle = useMemo(() => {
+        return [styles.nowIndicator, { top: indicatorPosition, left }];
+    }, [indicatorPosition, left]);
+    return (<View style={nowIndicatorStyle}>
+      <View style={[styles.nowIndicatorLine, { width }]}/>
       <View style={styles.nowIndicatorKnob}/>
     </View>);
 };

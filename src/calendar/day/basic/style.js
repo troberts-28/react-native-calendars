@@ -1,5 +1,6 @@
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet } from 'react-native';
 import * as defaultStyle from '../../../style';
+import constants from '../../../commons/constants';
 export default function styleConstructor(theme = {}) {
     const appStyle = { ...defaultStyle, ...theme };
     return StyleSheet.create({
@@ -13,7 +14,7 @@ export default function styleConstructor(theme = {}) {
             alignItems: 'center'
         },
         text: {
-            marginTop: Platform.OS === 'android' ? 4 : 6,
+            marginTop: constants.isAndroid ? 4 : 6,
             fontSize: appStyle.textDayFontSize,
             fontFamily: appStyle.textDayFontFamily,
             fontWeight: appStyle.textDayFontWeight,
@@ -22,7 +23,7 @@ export default function styleConstructor(theme = {}) {
             ...appStyle.textDayStyle
         },
         alignedText: {
-            marginTop: Platform.OS === 'android' ? 4 : 6
+            marginTop: constants.isAndroid ? 4 : 6
         },
         selected: {
             backgroundColor: appStyle.selectedDayBackgroundColor,
@@ -65,7 +66,6 @@ export default function styleConstructor(theme = {}) {
         todayDot: {
             backgroundColor: appStyle.todayDotColor || appStyle.dotColor
         },
-        // @ts-expect-error
         ...(theme['stylesheet.day.basic'] || {})
     });
 }

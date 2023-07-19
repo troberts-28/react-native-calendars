@@ -1,23 +1,22 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useRef } from 'react';
 import { View } from 'react-native';
 import styleConstructor from './style';
 const Dot = ({ theme, marked, disabled, inactive, color, today, selected }) => {
-    const style = styleConstructor(theme);
-    const dotStyle = [style.dot];
+    const style = useRef(styleConstructor(theme));
+    const dotStyle = [style.current.dot];
     if (marked) {
-        dotStyle.push(style.visibleDot);
+        dotStyle.push(style.current.visibleDot);
         if (today) {
-            dotStyle.push(style.todayDot);
+            dotStyle.push(style.current.todayDot);
         }
         if (disabled) {
-            dotStyle.push(style.disabledDot);
+            dotStyle.push(style.current.disabledDot);
         }
         if (inactive) {
-            dotStyle.push(style.inactiveDot);
+            dotStyle.push(style.current.inactiveDot);
         }
         if (selected) {
-            dotStyle.push(style.selectedDot);
+            dotStyle.push(style.current.selectedDot);
         }
         if (color) {
             dotStyle.push({ backgroundColor: color });
@@ -26,12 +25,3 @@ const Dot = ({ theme, marked, disabled, inactive, color, today, selected }) => {
     return <View style={dotStyle}/>;
 };
 export default Dot;
-Dot.propTypes = {
-    theme: PropTypes.object,
-    color: PropTypes.string,
-    marked: PropTypes.bool,
-    selected: PropTypes.bool,
-    disabled: PropTypes.bool,
-    inactive: PropTypes.bool,
-    today: PropTypes.bool
-};

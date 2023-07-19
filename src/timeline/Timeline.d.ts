@@ -1,12 +1,13 @@
 import React from 'react';
 import { Theme } from '../types';
+import { UnavailableHours } from './Packer';
 import { TimelineHoursProps } from './TimelineHours';
 import { Event, PackedEvent } from './EventBlock';
 export interface TimelineProps {
     /**
-     * The date of this timeline instance in ISO format (e.g. 2011-10-25)
+     * The date / dates of this timeline instance in ISO format (e.g. 2011-10-25)
      */
-    date?: string;
+    date?: string | string[];
     /**
      * List of events to display in this timeline
      */
@@ -39,8 +40,23 @@ export interface TimelineProps {
      */
     onBackgroundLongPressOut?: TimelineHoursProps['onBackgroundLongPressOut'];
     styles?: Theme;
+    /** Specify theme properties to override specific styles for calendar parts */
     theme?: Theme;
+    /**
+     * Should scroll to first event when loaded
+     */
     scrollToFirst?: boolean;
+    /**
+     * Should scroll to current time when loaded
+     */
+    scrollToNow?: boolean;
+    /**
+     * Initial time to scroll to
+     */
+    initialTime?: {
+        hour: number;
+        minutes: number;
+    };
     /**
      * Whether to use 24 hours format for the timeline hours
      */
@@ -61,7 +77,31 @@ export interface TimelineProps {
      * Listen to onScroll event of the timeline component
      */
     onChangeOffset?: (offset: number) => void;
+    /**
+     * Spacing between overlapping events
+     */
+    overlapEventsSpacing?: number;
+    /**
+     * Spacing to keep at the right edge (for background press)
+     */
+    rightEdgeSpacing?: number;
+    /**
+     * Range of available hours
+     */
+    unavailableHours?: UnavailableHours[];
+    /**
+     * Background color for unavailable hours
+     */
+    unavailableHoursColor?: string;
+    /**
+     * The number of days to present in the timeline calendar
+     */
+    numberOfDays?: number;
+    /**
+     * The left inset of the timeline calendar (sidebar width), default is 72
+     */
+    timelineLeftInset?: number;
 }
 export { Event as TimelineEventProps, PackedEvent as TimelinePackedEventProps };
-declare const _default: React.MemoExoticComponent<(props: TimelineProps) => JSX.Element>;
+declare const _default: React.MemoExoticComponent<(props: TimelineProps) => React.JSX.Element>;
 export default _default;
