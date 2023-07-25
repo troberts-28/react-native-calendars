@@ -37,8 +37,10 @@ export interface Theme {
   textSectionTitleDisabledColor?: string;
   dayTextColor?: string;
   selectedDayTextColor?: string;
+  periodSelectedDayTextColor?: string;
   monthTextColor?: string;
   selectedDayBackgroundColor?: string;
+  periodSelectedDayBackgroundColor?: string;
   arrowColor?: string;
   textDisabledColor?: string;
   textInactiveColor?: string;

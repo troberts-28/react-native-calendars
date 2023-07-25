@@ -1,13 +1,21 @@
 import PropTypes from 'prop-types';
 import React, {useCallback, useRef, useMemo} from 'react';
-import {TouchableWithoutFeedback, TouchableOpacity, Text, View, ViewStyle, ViewProps, TextStyle, StyleProp} from 'react-native';
+import {
+  TouchableWithoutFeedback,
+  TouchableOpacity,
+  Text,
+  View,
+  ViewStyle,
+  ViewProps,
+  TextStyle,
+  StyleProp
+} from 'react-native';
 
 import {xdateToData} from '../../../interface';
 import {Theme, DayState, DateData} from '../../../types';
 import styleConstructor from './style';
 import Dot from '../dot';
 import {MarkingProps} from '../marking';
-
 
 export interface PeriodDayProps extends ViewProps {
   theme?: Theme;
@@ -26,7 +34,7 @@ type MarkingStyle = {
   startingDay?: ViewStyle;
   endingDay?: ViewStyle;
   day?: ViewStyle;
-}
+};
 
 const PeriodDay = (props: PeriodDayProps) => {
   const {theme, marking, date, onPress, onLongPress, state, accessibilityLabel, testID, children} = props;
@@ -43,10 +51,10 @@ const PeriodDay = (props: PeriodDayProps) => {
         defaultStyle.textStyle = {color: style.current.disabledText.color};
       } else if (marking.inactive) {
         defaultStyle.textStyle = {color: style.current.inactiveText.color};
-      } else if (marking.selected) {
-        defaultStyle.textStyle = {color: style.current.selectedText.color};
+      } else if (marking.selected && state !== 'today') {
+        defaultStyle.textStyle = {color: style.current.periodSelectedDayTextColor.color};
       }
-  
+
       if (marking.startingDay) {
         defaultStyle.startingDay = {backgroundColor: marking.color};
       }
@@ -56,7 +64,7 @@ const PeriodDay = (props: PeriodDayProps) => {
       if (!marking.startingDay && !marking.endingDay) {
         defaultStyle.day = {backgroundColor: marking.color};
       }
-      
+
       if (marking.textColor) {
         defaultStyle.textStyle = {color: marking.textColor};
       }
@@ -66,7 +74,7 @@ const PeriodDay = (props: PeriodDayProps) => {
       if (marking.customContainerStyle) {
         defaultStyle.containerStyle = marking.customContainerStyle;
       }
-  
+
       return defaultStyle;
     }
   }, [marking]);
@@ -78,26 +86,71 @@ const PeriodDay = (props: PeriodDayProps) => {
       containerStyle.push(style.current.today);
     }
 
+    if (dateData?.dayOfWeek === 1) {
+      containerStyle.push({paddingLeft: 12});
+    } else if (dateData?.dayOfWeek === 0) {
+      containerStyle.push({paddingRight: 12});
+    }
+
     if (marking) {
       containerStyle.push({
         borderRadius: 17,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        aspectRatio: 1
       });
-      
+
       if (markingStyle.containerStyle) {
         containerStyle.push(markingStyle.containerStyle);
       }
 
-      const start = markingStyle.startingDay;
-      const end = markingStyle.endingDay;
-      if (start && !end) {
-        containerStyle.push({backgroundColor: markingStyle.startingDay?.backgroundColor});
-      } else if (end && !start || end && start) {
-        containerStyle.push({backgroundColor: markingStyle.endingDay?.backgroundColor});
+      if (!marking.selected) {
+        const start = markingStyle.startingDay;
+        const end = markingStyle.endingDay;
+        if (start && !end) {
+          containerStyle.push({backgroundColor: markingStyle.startingDay?.backgroundColor});
+        } else if ((end && !start) || (end && start)) {
+          containerStyle.push({backgroundColor: markingStyle.endingDay?.backgroundColor});
+        }
+      } else {
+        if (dateData?.dayOfWeek === 1) {
+          containerStyle.push({aspectRatio: undefined});
+        } else if (dateData?.dayOfWeek === 0) {
+          containerStyle.push({aspectRatio: undefined});
+        }
       }
     }
     return containerStyle;
   }, [marking, state]);
+
+  const selectedDayStyle = useMemo(() => {
+    const selectedDayStyle = [] as any[];
+    if (marking?.selected) {
+      selectedDayStyle.push({position: 'absolute', top: 0, bottom: 0, left: 0, right: 0});
+      if (dateData?.dayOfWeek === 1) {
+        containerStyle.push({left: 12});
+      } else if (dateData?.dayOfWeek === 0) {
+        containerStyle.push({right: 12});
+      }
+      if (marking.color) {
+        selectedDayStyle.push(style.current.periodSelectedDay);
+      } else {
+        selectedDayStyle.push(style.current.selectedDay);
+      }
+    }
+    return selectedDayStyle;
+  }, [marking]);
+
+  const dotContainerStyle = useMemo(() => {
+    const dotContainerStyle = [style.current.dotContainer];
+
+    if (dateData?.dayOfWeek === 1) {
+      dotContainerStyle.push({paddingLeft: 12});
+    } else if (dateData?.dayOfWeek === 0) {
+      dotContainerStyle.push({paddingRight: 12});
+    }
+
+    return dotContainerStyle;
+  }, []);
 
   const textStyle = useMemo(() => {
     const textStyle = [style.current.text];
@@ -144,8 +197,8 @@ const PeriodDay = (props: PeriodDayProps) => {
     if (marking) {
       return (
         <View style={[style.current.fillers, fillerStyles.fillerStyle]}>
-          <View style={[style.current.leftFiller, fillerStyles.leftFillerStyle]}/>
-          <View style={[style.current.rightFiller, fillerStyles.rightFillerStyle]}/>
+          <View style={[style.current.leftFiller, fillerStyles.leftFillerStyle]} />
+          <View style={[style.current.rightFiller, fillerStyles.rightFillerStyle]} />
         </View>
       );
     }
@@ -158,9 +211,9 @@ const PeriodDay = (props: PeriodDayProps) => {
   const _onLongPress = useCallback(() => {
     onLongPress?.(dateData);
   }, [onLongPress]);
-    
+
   const Component = marking ? TouchableWithoutFeedback : TouchableOpacity;
-  
+
   return (
     <Component
       testID={testID}
@@ -174,11 +227,12 @@ const PeriodDay = (props: PeriodDayProps) => {
       <View style={style.current.wrapper}>
         {renderFillers()}
         <View style={containerStyle}>
+          <View style={selectedDayStyle} />
           <Text allowFontScaling={false} style={textStyle}>
             {String(children)}
           </Text>
-          <View style={style.current.dotContainer}>
-            <Dot theme={theme} color={marking?.dotColor} marked={marking?.marked}/>
+          <View style={dotContainerStyle}>
+            <Dot theme={theme} color={marking?.dotColor} marked={marking?.marked} />
           </View>
         </View>
       </View>

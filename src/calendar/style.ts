@@ -23,7 +23,9 @@ export default function getStyle(theme: Theme = {}) {
     week: {
       marginVertical: appStyle.weekVerticalMargin,
       flexDirection: 'row',
-      justifyContent: 'space-around'
+      justifyContent: 'space-around',
+      marginHorizontal: -12,
+      marginBottom: 3.8,
     },
     ...(theme['stylesheet.calendar.main'] || {})
   });

@@ -26,8 +26,7 @@ import WeekDaysNames from '../commons/WeekDaysNames';
 import CalendarList, {CalendarListProps, CalendarListImperativeMethods} from '../calendar-list';
 import ReservationList, {ReservationListProps}  from './reservation-list';
 
-
-const HEADER_HEIGHT = 104;
+const HEADER_HEIGHT = 108;
 const KNOB_HEIGHT = 24;
 
 export type AgendaProps = CalendarListProps & ReservationListProps & {
@@ -332,7 +331,7 @@ export default class Agenda extends Component<AgendaProps, State> {
   renderReservations() {
     const reservationListProps = extractReservationListProps(this.props);
     if (isFunction(this.props.renderList)) {
-      return this.props.renderList({
+      return this.props.renderList?.({
         ...reservationListProps,
         selectedDay: this.state.selectedDay,
         topDay: this.state.topDay,

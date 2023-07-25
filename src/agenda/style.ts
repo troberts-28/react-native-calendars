@@ -33,6 +33,9 @@ export default function styleConstructor(theme: Theme = {}) {
       bottom: 0,
       alignItems: 'center',
       backgroundColor: appStyle.calendarBackground,
+      width: '100%',
+      borderBottomWidth: 0.9,
+      borderColor: "#D7D7D7"
     },
     dayHeader: {
       width: 32,
