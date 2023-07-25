@@ -186,7 +186,6 @@ export function extractCalendarListProps(props: AgendaProps) {
     topDay,
     onDayChange,
     showOnlySelectedDayItems,
-    renderEmptyData,
     // onScroll,
     // onScrollBeginDrag,
     // onScrollEndDrag,
@@ -217,7 +216,6 @@ export function extractReservationListProps(props: AgendaProps) {
     topDay,
     onDayChange,
     showOnlySelectedDayItems,
-    renderEmptyData,
     onScroll,
     onScrollBeginDrag,
     onScrollEndDrag,
@@ -236,6 +234,7 @@ export function extractReservationListProps(props: AgendaProps) {
     renderDay,
     renderItem,
     renderEmptyDate,
+    style,
   } = props;
 
   const ReservationListProps = {
@@ -245,7 +244,6 @@ export function extractReservationListProps(props: AgendaProps) {
     topDay,
     onDayChange,
     showOnlySelectedDayItems,
-    renderEmptyData,
     onScroll,
     onScrollBeginDrag,
     onScrollEndDrag,
@@ -264,6 +262,7 @@ export function extractReservationListProps(props: AgendaProps) {
     renderDay,
     renderItem,
     renderEmptyDate,
+    style,
   };
 
   return ReservationListProps;
