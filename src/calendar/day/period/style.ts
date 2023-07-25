@@ -45,6 +45,7 @@ export default function styleConstructor(theme: Theme = {}) {
     },
     dotContainer: {
       position: 'absolute',
+      flexDirection: 'row',
       bottom: 3
     },
     today: {

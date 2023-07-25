@@ -86,17 +86,13 @@ const PeriodDay = (props: PeriodDayProps) => {
       containerStyle.push(style.current.today);
     }
 
-    if (dateData?.dayOfWeek === 1) {
-      containerStyle.push({paddingLeft: 12});
-    } else if (dateData?.dayOfWeek === 0) {
-      containerStyle.push({paddingRight: 12});
-    }
-
     if (marking) {
       containerStyle.push({
-        borderRadius: 17,
+        borderRadius: 50,
         overflow: 'hidden',
-        aspectRatio: 1
+        aspectRatio: 1,
+        width: 34,
+        height: 34
       });
 
       if (markingStyle.containerStyle) {
@@ -126,11 +122,6 @@ const PeriodDay = (props: PeriodDayProps) => {
     const selectedDayStyle = [] as any[];
     if (marking?.selected) {
       selectedDayStyle.push({position: 'absolute', top: 0, bottom: 0, left: 0, right: 0});
-      if (dateData?.dayOfWeek === 1) {
-        containerStyle.push({left: 12});
-      } else if (dateData?.dayOfWeek === 0) {
-        containerStyle.push({right: 12});
-      }
       if (marking.color) {
         selectedDayStyle.push(style.current.periodSelectedDay);
       } else {
@@ -142,12 +133,6 @@ const PeriodDay = (props: PeriodDayProps) => {
 
   const dotContainerStyle = useMemo(() => {
     const dotContainerStyle = [style.current.dotContainer];
-
-    if (dateData?.dayOfWeek === 1) {
-      dotContainerStyle.push({paddingLeft: 12});
-    } else if (dateData?.dayOfWeek === 0) {
-      dotContainerStyle.push({paddingRight: 12});
-    }
 
     return dotContainerStyle;
   }, []);
@@ -232,7 +217,11 @@ const PeriodDay = (props: PeriodDayProps) => {
             {String(children)}
           </Text>
           <View style={dotContainerStyle}>
-            <Dot theme={theme} color={marking?.dotColor} marked={marking?.marked} />
+            {marking?.dots?.map((dot, index) => {
+              if (index < 3) {
+                return <Dot theme={theme} color={dot.color} marked />;
+              }
+            })}
           </View>
         </View>
       </View>
