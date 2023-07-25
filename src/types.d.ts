@@ -18,6 +18,9 @@ export declare type DateData = {
     timestamp: number;
     dateString: string;
 };
+export declare type ChooseDateData = {
+    dateString: string;
+};
 export interface Theme {
     timelineContainer?: object;
     contentStyle?: ViewStyle;
@@ -37,8 +40,10 @@ export interface Theme {
     textSectionTitleDisabledColor?: string;
     dayTextColor?: string;
     selectedDayTextColor?: string;
+    periodSelectedDayTextColor?: string;
     monthTextColor?: string;
     selectedDayBackgroundColor?: string;
+    periodSelectedDayBackgroundColor?: string;
     arrowColor?: string;
     textDisabledColor?: string;
     textInactiveColor?: string;

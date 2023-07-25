@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import XDate from 'xdate';
 import memoize from 'memoize-one';
 import React, { Component } from 'react';
-import { View, Dimensions, Animated } from 'react-native';
+import { View, Dimensions, Animated, LayoutAnimation } from 'react-native';
 import { extractCalendarListProps, extractReservationListProps } from '../componentUpdater';
 import { xdateToData, toMarkingFormat } from '../interface';
 import { sameDate, sameMonth } from '../dateutils';
@@ -14,7 +14,7 @@ import styleConstructor from './style';
 import WeekDaysNames from '../commons/WeekDaysNames';
 import CalendarList from '../calendar-list';
 import ReservationList from './reservation-list';
-const HEADER_HEIGHT = 104;
+const HEADER_HEIGHT = 108;
 const KNOB_HEIGHT = 24;
 /**
  * @description: Agenda component
@@ -142,6 +142,7 @@ export default class Agenda extends Component {
         }
     }
     onDayPress = (d) => {
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         this.chooseDay(d, !this.state.calendarScrollable);
     };
     chooseDay(d, optimisticScroll) {
@@ -238,7 +239,7 @@ export default class Agenda extends Component {
     renderReservations() {
         const reservationListProps = extractReservationListProps(this.props);
         if (isFunction(this.props.renderList)) {
-            return this.props.renderList({
+            return this.props.renderList?.({
                 ...reservationListProps,
                 selectedDay: this.state.selectedDay,
                 topDay: this.state.topDay,

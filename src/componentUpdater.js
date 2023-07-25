@@ -89,7 +89,7 @@ export function extractCalendarListProps(props) {
     // Agenda props
     loadItemsForMonth, onCalendarToggled, renderKnob, selected, hideKnob, showClosingKnob, 
     // ReservationList props
-    items, selectedDay, topDay, onDayChange, showOnlySelectedDayItems, renderEmptyData, 
+    items, selectedDay, topDay, onDayChange, showOnlySelectedDayItems, 
     // onScroll,
     // onScrollBeginDrag,
     // onScrollEndDrag,
@@ -108,9 +108,9 @@ export function extractCalendarListProps(props) {
 export function extractReservationListProps(props) {
     const { 
     // ReservationList props
-    items, selectedDay, topDay, onDayChange, showOnlySelectedDayItems, renderEmptyData, onScroll, onScrollBeginDrag, onScrollEndDrag, onMomentumScrollBegin, onMomentumScrollEnd, refreshControl, refreshing, onRefresh, reservationsKeyExtractor, 
+    items, selectedDay, topDay, onDayChange, showOnlySelectedDayItems, onScroll, onScrollBeginDrag, onScrollEndDrag, onMomentumScrollBegin, onMomentumScrollEnd, refreshControl, refreshing, onRefresh, reservationsKeyExtractor, listFooterComponent, 
     // Reservation props
-    date, item, theme, rowHasChanged, renderDay, renderItem, renderEmptyDate, } = props;
+    date, item, theme, rowHasChanged, renderDay, renderItem, renderEmptyDate, style, } = props;
     const ReservationListProps = {
         // ReservationList props
         items,
@@ -118,7 +118,6 @@ export function extractReservationListProps(props) {
         topDay,
         onDayChange,
         showOnlySelectedDayItems,
-        renderEmptyData,
         onScroll,
         onScrollBeginDrag,
         onScrollEndDrag,
@@ -128,6 +127,7 @@ export function extractReservationListProps(props) {
         refreshing,
         onRefresh,
         reservationsKeyExtractor,
+        listFooterComponent,
         // Reservation props
         date,
         item,
@@ -136,6 +136,7 @@ export function extractReservationListProps(props) {
         renderDay,
         renderItem,
         renderEmptyDate,
+        style,
     };
     return ReservationListProps;
 }

@@ -7,7 +7,7 @@ export default function styleConstructor(theme = {}) {
         wrapper: {
             alignItems: 'center',
             alignSelf: 'stretch',
-            marginLeft: -1
+            marginLeft: -1,
         },
         base: {
             width: 38,
@@ -20,12 +20,12 @@ export default function styleConstructor(theme = {}) {
             height: FILLER_HEIGHT,
             flexDirection: 'row',
             left: 0,
-            right: 0
+            right: 0,
         },
         leftFiller: {
             backgroundColor: appStyle.calendarBackground,
             height: FILLER_HEIGHT,
-            flex: 1
+            flex: 1,
         },
         rightFiller: {
             backgroundColor: appStyle.calendarBackground,
@@ -41,17 +41,27 @@ export default function styleConstructor(theme = {}) {
         },
         dotContainer: {
             position: 'absolute',
+            flexDirection: 'row',
             bottom: 3
         },
         today: {
             backgroundColor: appStyle.todayBackgroundColor
         },
         todayText: {
-            fontWeight: '700',
+            fontFamily: 'Nunito-Bold',
             color: theme.todayTextColor || appStyle.dayTextColor
         },
+        selectedDay: {
+            backgroundColor: appStyle.selectedDayBackgroundColor
+        },
         selectedText: {
-            color: appStyle.selectedDayTextColor
+            color: appStyle.selectedDayTextColor,
+        },
+        periodSelectedDay: {
+            backgroundColor: appStyle.periodSelectedDayBackgroundColor || appStyle.selectedDayTextColor,
+        },
+        periodSelectedDayTextColor: {
+            color: appStyle.periodSelectedDayTextColor
         },
         disabledText: {
             color: appStyle.textDisabledColor

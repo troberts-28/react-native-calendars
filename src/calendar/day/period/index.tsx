@@ -98,14 +98,6 @@ const PeriodDay = (props: PeriodDayProps) => {
       if (markingStyle.containerStyle) {
         containerStyle.push(markingStyle.containerStyle);
       }
-
-      const start = markingStyle.startingDay;
-      const end = markingStyle.endingDay;
-      if (start && !end) {
-        containerStyle.push({backgroundColor: markingStyle.startingDay?.backgroundColor});
-      } else if ((end && !start) || (end && start)) {
-        containerStyle.push({backgroundColor: markingStyle.endingDay?.backgroundColor});
-      }
     }
     return containerStyle;
   }, [marking, state]);
@@ -149,37 +141,22 @@ const PeriodDay = (props: PeriodDayProps) => {
     return textStyle;
   }, [marking, state]);
 
-  const fillerStyles = useMemo(() => {
-    const leftFillerStyle: ViewStyle = {backgroundColor: undefined};
-    const rightFillerStyle: ViewStyle = {backgroundColor: undefined};
-    let fillerStyle = {};
+  const fillerStyle = useMemo(() => {
+    const fillerStyle = [style.current.fillers];
 
     const start = markingStyle.startingDay;
     const end = markingStyle.endingDay;
 
     if (start && !end) {
-      rightFillerStyle.backgroundColor = markingStyle.startingDay?.backgroundColor;
+      fillerStyle.push({backgroundColor: start.backgroundColor, borderBottomLeftRadius: 25, borderTopLeftRadius: 25});
     } else if (end && !start) {
-      leftFillerStyle.backgroundColor = markingStyle.endingDay?.backgroundColor;
-    } else if (markingStyle.day) {
-      leftFillerStyle.backgroundColor = markingStyle.day?.backgroundColor;
-      rightFillerStyle.backgroundColor = markingStyle.day?.backgroundColor;
-      fillerStyle = {backgroundColor: markingStyle.day?.backgroundColor};
+      fillerStyle.push({backgroundColor: end.backgroundColor, borderBottomRightRadius: 25, borderTopRightRadius: 25});
+    } else {
+      fillerStyle.push({backgroundColor: markingStyle.day?.backgroundColor});
     }
 
-    return {leftFillerStyle, rightFillerStyle, fillerStyle};
+    return fillerStyle;
   }, [marking]);
-
-  const renderFillers = () => {
-    if (marking) {
-      return (
-        <View style={[style.current.fillers, fillerStyles.fillerStyle]}>
-          <View style={[style.current.leftFiller, fillerStyles.leftFillerStyle]} />
-          <View style={[style.current.rightFiller, fillerStyles.rightFillerStyle]} />
-        </View>
-      );
-    }
-  };
 
   const _onPress = useCallback(() => {
     onPress?.(dateData);
@@ -202,7 +179,7 @@ const PeriodDay = (props: PeriodDayProps) => {
       accessibilityLabel={accessibilityLabel}
     >
       <View style={style.current.wrapper}>
-        {renderFillers()}
+        {marking ? <View style={fillerStyle} /> : null}
         <View style={containerStyle}>
           <View style={selectedDayStyle} />
           <Text allowFontScaling={false} style={textStyle}>

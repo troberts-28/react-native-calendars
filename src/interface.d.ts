@@ -4,6 +4,7 @@ export declare function xdateToData(date: XDate | string): {
     year: any;
     month: any;
     day: any;
+    dayOfWeek: any;
     timestamp: any;
     dateString: string;
 };

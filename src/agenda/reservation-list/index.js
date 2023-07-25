@@ -1,8 +1,7 @@
-import isFunction from 'lodash/isFunction';
 import PropTypes from 'prop-types';
 import XDate from 'xdate';
 import React, { Component } from 'react';
-import { ActivityIndicator, View, FlatList } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { extractReservationProps } from '../../componentUpdater';
 import { sameDate } from '../../dateutils';
 import { toMarkingFormat } from '../../interface';
@@ -17,7 +16,6 @@ class ReservationList extends Component {
         topDay: PropTypes.instanceOf(XDate),
         onDayChange: PropTypes.func,
         showOnlySelectedDayItems: PropTypes.bool,
-        renderEmptyData: PropTypes.func,
         onScroll: PropTypes.func,
         onScrollBeginDrag: PropTypes.func,
         onScrollEndDrag: PropTypes.func,
@@ -184,13 +182,7 @@ class ReservationList extends Component {
         return this.props.reservationsKeyExtractor?.(item, index) || `${item?.reservation?.day}${index}`;
     };
     render() {
-        const { items, selectedDay, theme, style } = this.props;
-        if (!items || selectedDay && !items[toMarkingFormat(selectedDay)]) {
-            if (isFunction(this.props.renderEmptyData)) {
-                return this.props.renderEmptyData?.();
-            }
-            return <ActivityIndicator style={this.style.indicator} color={theme?.indicatorColor}/>;
-        }
+        const { style } = this.props;
         return (<FlatList ref={this.list} style={style} contentContainerStyle={this.style.content} data={this.state.reservations} renderItem={this.renderRow} keyExtractor={this.keyExtractor} showsVerticalScrollIndicator={false} scrollEventThrottle={200} onMoveShouldSetResponderCapture={this.onMoveShouldSetResponderCapture} onScroll={this.onScroll} refreshControl={this.props.refreshControl} refreshing={this.props.refreshing} onRefresh={this.props.onRefresh} onScrollBeginDrag={this.props.onScrollBeginDrag} onScrollEndDrag={this.props.onScrollEndDrag} onMomentumScrollBegin={this.props.onMomentumScrollBegin} onMomentumScrollEnd={this.props.onMomentumScrollEnd} ListFooterComponent={this.props.listFooterComponent}/>);
     }
 }

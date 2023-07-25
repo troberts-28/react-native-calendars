@@ -31,11 +31,12 @@ export default function styleConstructor(theme: Theme | undefined, calendarHeigh
         borderTopWidth?: number | undefined;
         borderWidth?: number | undefined;
         opacity?: number | undefined;
+        testID?: string | undefined;
         elevation?: number | undefined;
         alignContent?: "center" | "flex-start" | "flex-end" | "stretch" | "space-around" | "space-between" | undefined;
         alignItems?: import("react-native").FlexAlignType | undefined;
         alignSelf?: "auto" | import("react-native").FlexAlignType | undefined;
-        aspectRatio?: string | number | undefined;
+        aspectRatio?: number | undefined;
         borderEndWidth?: string | number | undefined;
         borderStartWidth?: string | number | undefined;
         bottom?: string | number | undefined;
@@ -43,9 +44,6 @@ export default function styleConstructor(theme: Theme | undefined, calendarHeigh
         end?: string | number | undefined;
         flex?: number | undefined;
         flexBasis?: string | number | undefined;
-        rowGap?: number | undefined;
-        gap?: number | undefined;
-        columnGap?: number | undefined;
         flexGrow?: number | undefined;
         flexShrink?: number | undefined;
         flexWrap?: "wrap" | "nowrap" | "wrap-reverse" | undefined;
