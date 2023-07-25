@@ -36,7 +36,7 @@
     "memoize-one": "^5.2.1",
     "prop-types": "^15.5.10",
     "react-native-swipe-gestures": "^1.0.5",
-    "recyclerlistview": "^3.0.5",
+    "recyclerlistview": "^4.0.0",
     "xdate": "^0.8.0"
   },
   "devDependencies": {
@@ -46,7 +46,7 @@
     "memoize-one": "^5.2.1",
     "prop-types": "^15.5.10",
     "react-native-swipe-gestures": "^1.0.5",
-    "recyclerlistview": "^3.0.5",
+    "recyclerlistview": "^4.0.0",
     "xdate": "^0.8.0",
     "@babel/core": "^7.12.9",
     "@babel/eslint-parser": "^7.13.4",
