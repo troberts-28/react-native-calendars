@@ -19,7 +19,7 @@ import {xdateToData, toMarkingFormat} from '../interface';
 import {sameDate, sameMonth} from '../dateutils';
 import {AGENDA_CALENDAR_KNOB} from '../testIDs';
 import {VelocityTracker} from '../velocityTracker';
-import {DateData, AgendaSchedule} from '../types';
+import {DateData, AgendaSchedule, ChooseDateData} from '../types';
 import {getCalendarDateString} from '../services';
 import styleConstructor from './style';
 import WeekDaysNames from '../commons/WeekDaysNames';
@@ -209,11 +209,11 @@ export default class Agenda extends Component<AgendaProps, State> {
     }
   }
 
-  onDayPress = (d: DateData) => {
+  onDayPress = (d: ChooseDateData) => {
     this.chooseDay(d, !this.state.calendarScrollable);
   };
 
-  chooseDay(d: DateData, optimisticScroll: boolean) {
+  chooseDay(d: ChooseDateData, optimisticScroll: boolean) {
     const day = new XDate(d.dateString);
 
     this.setState({
