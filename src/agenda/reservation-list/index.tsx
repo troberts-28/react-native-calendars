@@ -1,9 +1,8 @@
-import isFunction from 'lodash/isFunction';
 import PropTypes from 'prop-types';
 import XDate from 'xdate';
 
 import React, {Component, ReactElement} from 'react';
-import {ActivityIndicator, View, FlatList, StyleProp, ViewStyle, TextStyle, NativeSyntheticEvent, NativeScrollEvent, LayoutChangeEvent} from 'react-native';
+import {View, FlatList, StyleProp, ViewStyle, TextStyle, NativeSyntheticEvent, NativeScrollEvent, LayoutChangeEvent} from 'react-native';
 
 import {extractReservationProps} from '../../componentUpdater';
 import {sameDate} from '../../dateutils';
@@ -24,8 +23,6 @@ export type ReservationListProps = ReservationProps & {
   showOnlySelectedDayItems?: boolean;
   /** callback that gets called when day changes while scrolling agenda list */
   onDayChange?: (day: XDate) => void;
-  /** specify what should be rendered instead of ActivityIndicator */
-  renderEmptyData?: () => JSX.Element;
   style?: StyleProp<ViewStyle>;
 
   /** onScroll FlatList event */
@@ -62,10 +59,7 @@ class ReservationList extends Component<ReservationListProps, State> {
     selectedDay: PropTypes.instanceOf(XDate),
     topDay: PropTypes.instanceOf(XDate),
     onDayChange: PropTypes.func,
-    
     showOnlySelectedDayItems: PropTypes.bool,
-    renderEmptyData: PropTypes.func,
-
     onScroll: PropTypes.func,
     onScrollBeginDrag: PropTypes.func,
     onScrollEndDrag: PropTypes.func,
@@ -263,15 +257,8 @@ class ReservationList extends Component<ReservationListProps, State> {
   };
 
   render() {
-    const {items, selectedDay, theme, style} = this.props;
+    const {style} = this.props;
     
-    if (!items || selectedDay && !items[toMarkingFormat(selectedDay)]) {
-      if (isFunction(this.props.renderEmptyData)) {
-        return this.props.renderEmptyData?.();
-      }
-      return <ActivityIndicator style={this.style.indicator} color={theme?.indicatorColor}/>;
-    }
-
     return (
       <FlatList
         ref={this.list}
