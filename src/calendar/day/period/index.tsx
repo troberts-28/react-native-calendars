@@ -99,20 +99,12 @@ const PeriodDay = (props: PeriodDayProps) => {
         containerStyle.push(markingStyle.containerStyle);
       }
 
-      if (!marking.selected) {
-        const start = markingStyle.startingDay;
-        const end = markingStyle.endingDay;
-        if (start && !end) {
-          containerStyle.push({backgroundColor: markingStyle.startingDay?.backgroundColor});
-        } else if ((end && !start) || (end && start)) {
-          containerStyle.push({backgroundColor: markingStyle.endingDay?.backgroundColor});
-        }
-      } else {
-        if (dateData?.dayOfWeek === 1) {
-          containerStyle.push({aspectRatio: undefined});
-        } else if (dateData?.dayOfWeek === 0) {
-          containerStyle.push({aspectRatio: undefined});
-        }
+      const start = markingStyle.startingDay;
+      const end = markingStyle.endingDay;
+      if (start && !end) {
+        containerStyle.push({backgroundColor: markingStyle.startingDay?.backgroundColor});
+      } else if ((end && !start) || (end && start)) {
+        containerStyle.push({backgroundColor: markingStyle.endingDay?.backgroundColor});
       }
     }
     return containerStyle;
