@@ -284,7 +284,7 @@ const CalendarList = (props: CalendarListProps & ContextProp, ref: any) => {
           >
             <Text
               style={{fontFamily: 'Nunito-SemiBold', fontSize: 22, textAlign: 'center', marginHorizontal: 24}}
-            >{`You're going to be so much stronger by ${item.toString('MMMM')}. We know it.`}</Text>
+            >{`You're going to be so much stronger by ${item.toString('MMMM')}. We just know it.`}</Text>
             <Text style={{fontSize: 48, marginTop: 16}}>💪📈🔮</Text>
           </View>
         );
