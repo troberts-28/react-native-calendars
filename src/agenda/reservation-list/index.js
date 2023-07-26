@@ -175,7 +175,7 @@ class ReservationList extends Component {
     renderRow = ({ item, index }) => {
         const reservationProps = extractReservationProps(this.props);
         return (<View onLayout={this.onRowLayoutChange.bind(this, index)}>
-        <Reservation {...reservationProps} item={item.reservation} date={item.date}/>
+        <Reservation {...reservationProps} item={item.reservation} date={item.date} index={index}/>
       </View>);
     };
     keyExtractor = (item, index) => {

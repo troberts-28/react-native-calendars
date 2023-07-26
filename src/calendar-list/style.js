@@ -17,7 +17,8 @@ export default function getStyle(theme = {}) {
         placeholderText: {
             fontSize: 20,
             fontWeight: '200',
-            color: appStyle.dayTextColor
+            color: appStyle.dayTextColor,
+            fontFamily: "Nunito-Regular"
         },
         calendar: {
             paddingLeft: 15,

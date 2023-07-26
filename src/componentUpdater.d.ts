@@ -472,6 +472,7 @@ export declare function extractCalendarListProps(props: AgendaProps): {
     overScrollMode?: "auto" | "never" | "always" | undefined;
     nestedScrollEnabled?: boolean | undefined;
     persistentScrollbar?: boolean | undefined;
+    index: number;
     renderDay?: ((date?: import("xdate") | undefined, item?: import("./types").AgendaEntry | undefined) => JSX.Element) | undefined;
     listFooterComponent?: import("react").ReactElement<any, string | import("react").JSXElementConstructor<any>> | undefined;
     renderList?: ((listProps: ReservationListProps) => JSX.Element) | undefined;

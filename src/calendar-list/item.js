@@ -1,5 +1,5 @@
 import React, { useRef, useMemo, useCallback } from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 import { toMarkingFormat } from '../interface';
 import { extractCalendarProps } from '../componentUpdater';
 import styleConstructor from './style';
@@ -19,9 +19,6 @@ const CalendarListItem = React.memo((props) => {
             propsStyle
         ];
     }, [calendarWidth, calendarHeight, propsStyle]);
-    const textStyle = useMemo(() => {
-        return [calendarStyle, style.current.placeholderText];
-    }, [calendarStyle]);
     const _onPressArrowLeft = useCallback((method, month) => {
         const monthClone = month?.clone();
         if (monthClone) {
@@ -52,7 +49,12 @@ const CalendarListItem = React.memo((props) => {
         }
     }, [onPressArrowRight, scrollToMonth]);
     if (!visible) {
-        return (<Text style={textStyle}>{dateString}</Text>);
+        return (<View style={[
+                calendarStyle,
+                { justifyContent: 'center', alignItems: 'center', flex: 1, width: '100%', backgroundColor: '#EDEDED' }
+            ]}>
+        <Text style={style.current.placeholderText}>{item.toString('MMM yyyy')}</Text>
+      </View>);
     }
     return (<Calendar hideArrows={true} hideExtraDays={true} {...calendarProps} current={dateString} style={calendarStyle} headerStyle={horizontal ? headerStyle : undefined} disableMonthChange onPressArrowLeft={horizontal ? _onPressArrowLeft : onPressArrowLeft} onPressArrowRight={horizontal ? _onPressArrowRight : onPressArrowRight}/>);
 });
