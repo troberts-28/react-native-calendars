@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import XDate from 'xdate';
 
 import React, {Component} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 
 import {isToday} from '../../dateutils';
 import {getDefaultLocale} from '../../services';
@@ -15,6 +15,7 @@ import {Theme, AgendaEntry} from '../../types';
 export interface ReservationProps {
   date?: XDate;
   item?: AgendaEntry;
+  index: number;
   /** Specify theme properties to override specific styles for item's parts. Default = {} */
   theme?: Theme;
   /** specify your item comparison function for increased performance */
@@ -33,6 +34,7 @@ class Reservation extends Component<ReservationProps> {
   static propTypes = {
     date: PropTypes.any,
     item: PropTypes.any,
+    index: PropTypes.number,
     theme: PropTypes.object,
     rowHasChanged: PropTypes.func,
     renderDay: PropTypes.func,
@@ -110,7 +112,7 @@ class Reservation extends Component<ReservationProps> {
     }
 
     return (
-      <View style={this.style.container}>
+      <View style={[this.style.container, {marginTop: this.props.index === 2 ? -StyleSheet.hairlineWidth : 0, marginBottom: this.props.index === 2 ? StyleSheet.hairlineWidth : 0}]}>
         {this.renderDate()}
         <View style={this.style.innerContainer}>{content}</View>
       </View>

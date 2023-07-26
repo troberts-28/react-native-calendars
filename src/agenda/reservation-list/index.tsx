@@ -247,7 +247,7 @@ class ReservationList extends Component<ReservationListProps, State> {
 
     return (
       <View onLayout={this.onRowLayoutChange.bind(this, index)}>
-        <Reservation {...reservationProps} item={item.reservation} date={item.date}/>
+        <Reservation {...reservationProps} item={item.reservation} date={item.date} index={index}/>
       </View>
     );
   };
