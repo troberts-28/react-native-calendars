@@ -29,7 +29,6 @@ export default function styleConstructor(theme: Theme = {}) {
       position: 'absolute',
       left: 0,
       right: 0,
-      height: 24,
       bottom: 0,
       alignItems: 'center',
       backgroundColor: appStyle.calendarBackground,
@@ -47,7 +46,7 @@ export default function styleConstructor(theme: Theme = {}) {
     },
     reservations: {
       flex: 1,
-      marginTop: 104,
+      marginTop: 116,
       backgroundColor: appStyle.reservationsBackgroundColor || appStyle.backgroundColor //TODO: remove 2nd in V2
     },
     scrollPadStyle: {

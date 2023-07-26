@@ -27,8 +27,8 @@ import WeekDaysNames from '../commons/WeekDaysNames';
 import CalendarList, {CalendarListProps, CalendarListImperativeMethods} from '../calendar-list';
 import ReservationList, {ReservationListProps}  from './reservation-list';
 
-const HEADER_HEIGHT = 108;
-const KNOB_HEIGHT = 24;
+const HEADER_HEIGHT = 116;
+const KNOB_HEIGHT = 17;
 
 export type AgendaProps = CalendarListProps & ReservationListProps & {
   /** the list of items that have to be displayed in agenda. If you want to render item as empty date
