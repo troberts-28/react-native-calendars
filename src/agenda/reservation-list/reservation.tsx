@@ -111,15 +111,7 @@ class Reservation extends Component<ReservationProps> {
     }
 
     return (
-      <View
-        style={[
-          this.style.container,
-          {
-            marginTop: this.props.index === 2 ? -StyleSheet.hairlineWidth : 0,
-            marginBottom: this.props.index === 2 ? StyleSheet.hairlineWidth : 0
-          }
-        ]}
-      >
+      <View style={this.style.container}>
         {this.renderDate()}
         <View style={this.style.innerContainer}>{content}</View>
       </View>

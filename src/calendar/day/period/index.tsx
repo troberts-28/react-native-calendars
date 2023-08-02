@@ -37,7 +37,7 @@ type MarkingStyle = {
 };
 
 const PeriodDay = (props: PeriodDayProps) => {
-  const {theme, marking, date, onPress, onLongPress, state, accessibilityLabel, testID, children} = props;
+  const {theme, marking = {}, date, onPress, onLongPress, state, accessibilityLabel, testID, children} = props;
   const dateData = date ? xdateToData(date) : undefined;
   const style = useRef(styleConstructor(theme));
 
@@ -86,26 +86,17 @@ const PeriodDay = (props: PeriodDayProps) => {
       containerStyle.push(style.current.today);
     }
 
-    if (marking) {
-      containerStyle.push({
-        borderRadius: 50,
-        overflow: 'hidden',
-        aspectRatio: 1,
-        width: 34,
-        height: 34
-      });
-
-      if (markingStyle.containerStyle) {
-        containerStyle.push(markingStyle.containerStyle);
-      }
+    if (markingStyle?.containerStyle) {
+      containerStyle.push(markingStyle.containerStyle);
     }
     return containerStyle;
   }, [marking, state]);
 
   const selectedDayStyle = useMemo(() => {
-    const selectedDayStyle = [] as any[];
+    const selectedDayStyle = [
+      {position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, height: 36, width: 36}
+    ] as any[];
     if (marking?.selected) {
-      selectedDayStyle.push({position: 'absolute', top: 0, bottom: 0, left: 0, right: 0});
       if (marking.color) {
         selectedDayStyle.push(style.current.periodSelectedDay);
       } else {
@@ -132,10 +123,8 @@ const PeriodDay = (props: PeriodDayProps) => {
       textStyle.push(style.current.todayText);
     }
 
-    if (marking) {
-      if (markingStyle.textStyle) {
-        textStyle.push(markingStyle.textStyle);
-      }
+    if (markingStyle.textStyle) {
+      textStyle.push(markingStyle.textStyle);
     }
 
     return textStyle;
@@ -152,7 +141,7 @@ const PeriodDay = (props: PeriodDayProps) => {
     } else if (end && !start) {
       fillerStyle.push({backgroundColor: end.backgroundColor, borderBottomRightRadius: 25, borderTopRightRadius: 25});
     } else {
-      fillerStyle.push({backgroundColor: markingStyle.day?.backgroundColor});
+      fillerStyle.push({backgroundColor: markingStyle.day?.backgroundColor ?? 'transparent'});
     }
 
     return fillerStyle;
@@ -179,7 +168,7 @@ const PeriodDay = (props: PeriodDayProps) => {
       accessibilityLabel={accessibilityLabel}
     >
       <View style={style.current.wrapper}>
-        {marking ? <View style={fillerStyle} /> : null}
+        {marking?.color ? <View style={fillerStyle} /> : null}
         <View style={containerStyle}>
           <View style={selectedDayStyle} />
           <Text allowFontScaling={false} style={textStyle}>

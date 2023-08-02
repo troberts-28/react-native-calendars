@@ -175,7 +175,7 @@ const CalendarList = (props: CalendarListProps & ContextProp, ref: any) => {
       for (let i = 0; i < days.length; i++) {
         week = Math.floor(i / 7);
         if (sameDate(days[i], scrollTo)) {
-          scrollAmount += 46 * week;
+          scrollAmount += 44.8 * week;
           break;
         }
       }
@@ -355,7 +355,7 @@ const CalendarList = (props: CalendarListProps & ContextProp, ref: any) => {
   ]);
 
   return (
-    <View style={style.current.flatListContainer} testID={testID}>
+    <View style={[style.current.flatListContainer]} testID={testID}>
       <FlatList
         // @ts-expect-error
         ref={list}
