@@ -7,13 +7,16 @@ export default function styleConstructor(theme = {}) {
             alignItems: 'center',
             alignSelf: 'stretch',
             marginLeft: -1,
-            zIndex: 2,
+            zIndex: 2
         },
         base: {
-            width: 38,
-            height: 34,
             alignItems: 'center',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            borderRadius: 50,
+            overflow: 'hidden',
+            aspectRatio: 1,
+            width: 34,
+            height: 34
         },
         fillers: {
             position: 'absolute',
@@ -21,7 +24,7 @@ export default function styleConstructor(theme = {}) {
             top: -4,
             bottom: -4,
             left: 0,
-            right: 0,
+            right: 0
         },
         text: {
             fontSize: appStyle.textDayFontSize,
@@ -46,10 +49,10 @@ export default function styleConstructor(theme = {}) {
             backgroundColor: appStyle.selectedDayBackgroundColor
         },
         selectedText: {
-            color: appStyle.selectedDayTextColor,
+            color: appStyle.selectedDayTextColor
         },
         periodSelectedDay: {
-            backgroundColor: appStyle.periodSelectedDayBackgroundColor || appStyle.selectedDayTextColor,
+            backgroundColor: appStyle.periodSelectedDayBackgroundColor || appStyle.selectedDayTextColor
         },
         periodSelectedDayTextColor: {
             color: appStyle.periodSelectedDayTextColor

@@ -7,10 +7,10 @@ export default function styleConstructor(theme = {}) {
     return StyleSheet.create({
         container: {
             flex: 1,
-            overflow: 'hidden',
+            overflow: 'hidden'
         },
         animatedContainer: {
-            flex: 1,
+            flex: 1
         },
         knob,
         weekdays,
@@ -30,8 +30,8 @@ export default function styleConstructor(theme = {}) {
             alignItems: 'center',
             backgroundColor: appStyle.calendarBackground,
             width: '100%',
-            borderBottomWidth: 0.9,
-            borderColor: "#D7D7D7"
+            borderBottomWidth: 1,
+            borderColor: '#D7D7D7'
         },
         dayHeader: {
             width: 32,
@@ -43,7 +43,7 @@ export default function styleConstructor(theme = {}) {
         },
         reservations: {
             flex: 1,
-            marginTop: 116,
+            marginTop: 115.5,
             backgroundColor: appStyle.reservationsBackgroundColor || appStyle.backgroundColor //TODO: remove 2nd in V2
         },
         scrollPadStyle: {

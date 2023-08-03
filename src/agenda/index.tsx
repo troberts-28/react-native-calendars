@@ -12,7 +12,6 @@ import {
   LayoutChangeEvent,
   NativeSyntheticEvent,
   NativeScrollEvent,
-  LayoutAnimation
 } from 'react-native';
 
 import {extractCalendarListProps, extractReservationListProps} from '../componentUpdater';
@@ -210,7 +209,6 @@ export default class Agenda extends Component<AgendaProps, State> {
   }
 
   onDayPress = (d: ChooseDateData) => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     this.chooseDay(d, !this.state.calendarScrollable);
   };
 

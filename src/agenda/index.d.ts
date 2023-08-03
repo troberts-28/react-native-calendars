@@ -7,8 +7,8 @@ import { CalendarListProps } from '../calendar-list';
 import ReservationList, { ReservationListProps } from './reservation-list';
 export declare type AgendaProps = CalendarListProps & ReservationListProps & {
     /** the list of items that have to be displayed in agenda. If you want to render item as empty date
-    the value of date key kas to be an empty array []. If there exists no value for date key it is
-    considered that the date in question is not yet loaded */
+  the value of date key kas to be an empty array []. If there exists no value for date key it is
+  considered that the date in question is not yet loaded */
     items?: AgendaSchedule;
     /** callback that gets called when items for a certain month should be loaded (month became visible) */
     loadItemsForMonth?: (data: DateData) => void;

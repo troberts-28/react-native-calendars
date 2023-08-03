@@ -59,7 +59,7 @@ declare class ReservationList extends Component<ReservationListProps, State> {
         reservationsKeyExtractor: PropTypes.Requireable<(...args: any[]) => any>;
         date: PropTypes.Requireable<any>;
         item: PropTypes.Requireable<any>;
-        index: PropTypes.Requireable<number>; /** Called when the user stops dragging the agenda list **/
+        index: PropTypes.Requireable<number>;
         theme: PropTypes.Requireable<object>;
         rowHasChanged: PropTypes.Requireable<(...args: any[]) => any>;
         renderDay: PropTypes.Requireable<(...args: any[]) => any>;

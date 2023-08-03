@@ -102,7 +102,7 @@ const CalendarList = (props, ref) => {
             for (let i = 0; i < days.length; i++) {
                 week = Math.floor(i / 7);
                 if (sameDate(days[i], scrollTo)) {
-                    scrollAmount += 46 * week;
+                    scrollAmount += 44.8 * week;
                     break;
                 }
             }
@@ -222,7 +222,7 @@ const CalendarList = (props, ref) => {
             onViewableItemsChanged
         }
     ]);
-    return (<View style={style.current.flatListContainer} testID={testID}>
+    return (<View style={[style.current.flatListContainer]} testID={testID}>
       <FlatList 
     // @ts-expect-error
     ref={list} style={listStyle} showsVerticalScrollIndicator={showScrollIndicator} showsHorizontalScrollIndicator={showScrollIndicator} data={items} renderItem={renderItem} getItemLayout={getItemLayout} initialNumToRender={range.current} initialScrollIndex={initialDateIndex} viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current} testID={`${testID}.list`} onLayout={onLayout} removeClippedSubviews={removeClippedSubviews} pagingEnabled={pagingEnabled} scrollEnabled={scrollEnabled} scrollsToTop={scrollsToTop} horizontal={horizontal} keyboardShouldPersistTaps={keyboardShouldPersistTaps} keyExtractor={keyExtractor} onEndReachedThreshold={onEndReachedThreshold} onEndReached={onEndReached} nestedScrollEnabled={nestedScrollEnabled} onMomentumScrollBegin={onMomentumScrollBegin} onMomentumScrollEnd={onMomentumScrollEnd} onScrollBeginDrag={onScrollBeginDrag} onScrollEndDrag={onScrollEndDrag}/>

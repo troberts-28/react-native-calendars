@@ -1,7 +1,7 @@
 import isFunction from 'lodash/isFunction';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text } from 'react-native';
 import { isToday } from '../../dateutils';
 import { getDefaultLocale } from '../../services';
 import { RESERVATION_DATE } from '../../testIDs';
@@ -77,13 +77,7 @@ class Reservation extends Component {
         else if (isFunction(renderEmptyDate)) {
             content = renderEmptyDate(date);
         }
-        return (<View style={[
-                this.style.container,
-                {
-                    marginTop: this.props.index === 2 ? -StyleSheet.hairlineWidth : 0,
-                    marginBottom: this.props.index === 2 ? StyleSheet.hairlineWidth : 0
-                }
-            ]}>
+        return (<View style={this.style.container}>
         {this.renderDate()}
         <View style={this.style.innerContainer}>{content}</View>
       </View>);
