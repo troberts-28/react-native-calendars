@@ -1,36 +1,30 @@
 import { StyleSheet } from 'react-native';
 import * as defaultStyle from '../../../style';
-const FILLER_HEIGHT = 34;
 export default function styleConstructor(theme = {}) {
     const appStyle = { ...defaultStyle, ...theme };
     return StyleSheet.create({
         wrapper: {
             alignItems: 'center',
             alignSelf: 'stretch',
-            marginLeft: -1
+            marginLeft: -1,
+            zIndex: 2
         },
         base: {
-            width: 38,
-            height: FILLER_HEIGHT,
             alignItems: 'center',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            borderRadius: 50,
+            overflow: 'hidden',
+            aspectRatio: 1,
+            width: 34,
+            height: 34
         },
         fillers: {
             position: 'absolute',
-            height: FILLER_HEIGHT,
             flexDirection: 'row',
+            top: -4,
+            bottom: -4,
             left: 0,
             right: 0
-        },
-        leftFiller: {
-            backgroundColor: appStyle.calendarBackground,
-            height: FILLER_HEIGHT,
-            flex: 1
-        },
-        rightFiller: {
-            backgroundColor: appStyle.calendarBackground,
-            height: FILLER_HEIGHT,
-            flex: 1
         },
         text: {
             fontSize: appStyle.textDayFontSize,
@@ -41,17 +35,27 @@ export default function styleConstructor(theme = {}) {
         },
         dotContainer: {
             position: 'absolute',
+            flexDirection: 'row',
             bottom: 3
         },
         today: {
             backgroundColor: appStyle.todayBackgroundColor
         },
         todayText: {
-            fontWeight: '700',
+            fontFamily: 'Nunito-Bold',
             color: theme.todayTextColor || appStyle.dayTextColor
+        },
+        selectedDay: {
+            backgroundColor: appStyle.selectedDayBackgroundColor
         },
         selectedText: {
             color: appStyle.selectedDayTextColor
+        },
+        periodSelectedDay: {
+            backgroundColor: appStyle.periodSelectedDayBackgroundColor || appStyle.selectedDayTextColor
+        },
+        periodSelectedDayTextColor: {
+            color: appStyle.periodSelectedDayTextColor
         },
         disabledText: {
             color: appStyle.textDisabledColor

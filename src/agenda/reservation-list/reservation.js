@@ -11,6 +11,7 @@ class Reservation extends Component {
     static propTypes = {
         date: PropTypes.any,
         item: PropTypes.any,
+        index: PropTypes.number,
         theme: PropTypes.object,
         rowHasChanged: PropTypes.func,
         renderDay: PropTypes.func,

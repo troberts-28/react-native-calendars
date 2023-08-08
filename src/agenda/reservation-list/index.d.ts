@@ -15,8 +15,6 @@ export declare type ReservationListProps = ReservationProps & {
     showOnlySelectedDayItems?: boolean;
     /** callback that gets called when day changes while scrolling agenda list */
     onDayChange?: (day: XDate) => void;
-    /** specify what should be rendered instead of ActivityIndicator */
-    renderEmptyData?: () => JSX.Element;
     style?: StyleProp<ViewStyle>;
     /** onScroll FlatList event */
     onScroll?: (yOffset: number) => void;
@@ -49,7 +47,6 @@ declare class ReservationList extends Component<ReservationListProps, State> {
         topDay: PropTypes.Requireable<XDate>;
         onDayChange: PropTypes.Requireable<(...args: any[]) => any>;
         showOnlySelectedDayItems: PropTypes.Requireable<boolean>;
-        renderEmptyData: PropTypes.Requireable<(...args: any[]) => any>;
         onScroll: PropTypes.Requireable<(...args: any[]) => any>;
         onScrollBeginDrag: PropTypes.Requireable<(...args: any[]) => any>;
         onScrollEndDrag: PropTypes.Requireable<(...args: any[]) => any>;
@@ -62,6 +59,7 @@ declare class ReservationList extends Component<ReservationListProps, State> {
         reservationsKeyExtractor: PropTypes.Requireable<(...args: any[]) => any>;
         date: PropTypes.Requireable<any>;
         item: PropTypes.Requireable<any>;
+        index: PropTypes.Requireable<number>;
         theme: PropTypes.Requireable<object>;
         rowHasChanged: PropTypes.Requireable<(...args: any[]) => any>;
         renderDay: PropTypes.Requireable<(...args: any[]) => any>;

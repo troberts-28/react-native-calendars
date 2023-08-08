@@ -5,6 +5,7 @@ import { Theme, AgendaEntry } from '../../types';
 export interface ReservationProps {
     date?: XDate;
     item?: AgendaEntry;
+    index: number;
     /** Specify theme properties to override specific styles for item's parts. Default = {} */
     theme?: Theme;
     /** specify your item comparison function for increased performance */
@@ -21,6 +22,7 @@ declare class Reservation extends Component<ReservationProps> {
     static propTypes: {
         date: PropTypes.Requireable<any>;
         item: PropTypes.Requireable<any>;
+        index: PropTypes.Requireable<number>;
         theme: PropTypes.Requireable<object>;
         rowHasChanged: PropTypes.Requireable<(...args: any[]) => any>;
         renderDay: PropTypes.Requireable<(...args: any[]) => any>;

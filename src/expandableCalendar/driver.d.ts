@@ -1,6 +1,5 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
-import { ReactTestInstance } from 'react-test-renderer';
 export declare class ExpandableCalendarDriver {
     testID: string;
     element: React.ReactElement;
@@ -8,27 +7,27 @@ export declare class ExpandableCalendarDriver {
     constructor(testID: string, element: React.ReactElement);
     render(element?: React.ReactElement<any, string | React.JSXElementConstructor<any>>): ReturnType<typeof render>;
     /** Container */
-    getExpandableContainer(): ReactTestInstance;
+    getExpandableContainer(): any;
     isCalendarExpanded(): boolean;
     /** Header */
-    getRightArrow(): ReactTestInstance;
-    getLeftArrow(): ReactTestInstance;
+    getRightArrow(): any;
+    getLeftArrow(): any;
     /** Knob and Position */
     get knobTestID(): string;
-    getKnob(): ReactTestInstance | null;
+    getKnob(): any;
     toggleKnob(): void;
     /** CalendarList */
-    getCalendarList(): ReactTestInstance;
+    getCalendarList(): any;
     getDayTestID(date: string): string;
-    getDay(date: string): ReactTestInstance;
+    getDay(date: string): any;
     selectDay(date: string): void;
     /** WeekCalendar */
-    getWeekCalendar(): ReactTestInstance;
+    getWeekCalendar(): any;
     getWeekDayTestID(date: string): string;
-    getWeekDay(date: string): ReactTestInstance;
+    getWeekDay(date: string): any;
     selectWeekDay(date: string): void;
     /** today button */
-    getTodayButton(): ReactTestInstance | undefined;
+    getTodayButton(): any;
     /** actions */
     pressOnTodayButton(): void;
     pressOnHeaderArrow({ left }?: {

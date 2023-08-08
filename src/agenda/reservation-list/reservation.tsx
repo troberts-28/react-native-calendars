@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import XDate from 'xdate';
 
 import React, {Component} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 
 import {isToday} from '../../dateutils';
 import {getDefaultLocale} from '../../services';
@@ -11,10 +11,10 @@ import {RESERVATION_DATE} from '../../testIDs';
 import styleConstructor from './style';
 import {Theme, AgendaEntry} from '../../types';
 
-
 export interface ReservationProps {
   date?: XDate;
   item?: AgendaEntry;
+  index: number;
   /** Specify theme properties to override specific styles for item's parts. Default = {} */
   theme?: Theme;
   /** specify your item comparison function for increased performance */
@@ -33,6 +33,7 @@ class Reservation extends Component<ReservationProps> {
   static propTypes = {
     date: PropTypes.any,
     item: PropTypes.any,
+    index: PropTypes.number,
     theme: PropTypes.object,
     rowHasChanged: PropTypes.func,
     renderDay: PropTypes.func,
@@ -53,7 +54,7 @@ class Reservation extends Component<ReservationProps> {
     const d2 = nextProps.date;
     const r1 = this.props.item;
     const r2 = nextProps.item;
-    
+
     let changed = true;
     if (d1 && d2) {
       if (d1.getTime() !== d2.getTime()) {
@@ -93,12 +94,12 @@ class Reservation extends Component<ReservationProps> {
         </View>
       );
     }
-    return <View style={this.style.day}/>;
+    return <View style={this.style.day} />;
   }
 
   render() {
     const {item, date, renderItem, renderEmptyDate} = this.props;
-    
+
     let content;
     if (item) {
       const firstItem = date ? true : false;

@@ -37,7 +37,7 @@ type MarkingStyle = {
 };
 
 const PeriodDay = (props: PeriodDayProps) => {
-  const {theme, marking, date, onPress, onLongPress, state, accessibilityLabel, testID, children} = props;
+  const {theme, marking = {}, date, onPress, onLongPress, state, accessibilityLabel, testID, children} = props;
   const dateData = date ? xdateToData(date) : undefined;
   const style = useRef(styleConstructor(theme));
 
@@ -86,51 +86,17 @@ const PeriodDay = (props: PeriodDayProps) => {
       containerStyle.push(style.current.today);
     }
 
-    if (dateData?.dayOfWeek === 1) {
-      containerStyle.push({paddingLeft: 12});
-    } else if (dateData?.dayOfWeek === 0) {
-      containerStyle.push({paddingRight: 12});
-    }
-
-    if (marking) {
-      containerStyle.push({
-        borderRadius: 17,
-        overflow: 'hidden',
-        aspectRatio: 1
-      });
-
-      if (markingStyle.containerStyle) {
-        containerStyle.push(markingStyle.containerStyle);
-      }
-
-      if (!marking.selected) {
-        const start = markingStyle.startingDay;
-        const end = markingStyle.endingDay;
-        if (start && !end) {
-          containerStyle.push({backgroundColor: markingStyle.startingDay?.backgroundColor});
-        } else if ((end && !start) || (end && start)) {
-          containerStyle.push({backgroundColor: markingStyle.endingDay?.backgroundColor});
-        }
-      } else {
-        if (dateData?.dayOfWeek === 1) {
-          containerStyle.push({aspectRatio: undefined});
-        } else if (dateData?.dayOfWeek === 0) {
-          containerStyle.push({aspectRatio: undefined});
-        }
-      }
+    if (markingStyle?.containerStyle) {
+      containerStyle.push(markingStyle.containerStyle);
     }
     return containerStyle;
   }, [marking, state]);
 
   const selectedDayStyle = useMemo(() => {
-    const selectedDayStyle = [] as any[];
+    const selectedDayStyle = [
+      {position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, height: 36, width: 36}
+    ] as any[];
     if (marking?.selected) {
-      selectedDayStyle.push({position: 'absolute', top: 0, bottom: 0, left: 0, right: 0});
-      if (dateData?.dayOfWeek === 1) {
-        containerStyle.push({left: 12});
-      } else if (dateData?.dayOfWeek === 0) {
-        containerStyle.push({right: 12});
-      }
       if (marking.color) {
         selectedDayStyle.push(style.current.periodSelectedDay);
       } else {
@@ -142,12 +108,6 @@ const PeriodDay = (props: PeriodDayProps) => {
 
   const dotContainerStyle = useMemo(() => {
     const dotContainerStyle = [style.current.dotContainer];
-
-    if (dateData?.dayOfWeek === 1) {
-      dotContainerStyle.push({paddingLeft: 12});
-    } else if (dateData?.dayOfWeek === 0) {
-      dotContainerStyle.push({paddingRight: 12});
-    }
 
     return dotContainerStyle;
   }, []);
@@ -163,46 +123,29 @@ const PeriodDay = (props: PeriodDayProps) => {
       textStyle.push(style.current.todayText);
     }
 
-    if (marking) {
-      if (markingStyle.textStyle) {
-        textStyle.push(markingStyle.textStyle);
-      }
+    if (markingStyle.textStyle) {
+      textStyle.push(markingStyle.textStyle);
     }
 
     return textStyle;
   }, [marking, state]);
 
-  const fillerStyles = useMemo(() => {
-    const leftFillerStyle: ViewStyle = {backgroundColor: undefined};
-    const rightFillerStyle: ViewStyle = {backgroundColor: undefined};
-    let fillerStyle = {};
+  const fillerStyle = useMemo(() => {
+    const fillerStyle = [style.current.fillers];
 
     const start = markingStyle.startingDay;
     const end = markingStyle.endingDay;
 
     if (start && !end) {
-      rightFillerStyle.backgroundColor = markingStyle.startingDay?.backgroundColor;
+      fillerStyle.push({backgroundColor: start.backgroundColor, borderBottomLeftRadius: 25, borderTopLeftRadius: 25});
     } else if (end && !start) {
-      leftFillerStyle.backgroundColor = markingStyle.endingDay?.backgroundColor;
-    } else if (markingStyle.day) {
-      leftFillerStyle.backgroundColor = markingStyle.day?.backgroundColor;
-      rightFillerStyle.backgroundColor = markingStyle.day?.backgroundColor;
-      fillerStyle = {backgroundColor: markingStyle.day?.backgroundColor};
+      fillerStyle.push({backgroundColor: end.backgroundColor, borderBottomRightRadius: 25, borderTopRightRadius: 25});
+    } else {
+      fillerStyle.push({backgroundColor: markingStyle.day?.backgroundColor ?? 'transparent'});
     }
 
-    return {leftFillerStyle, rightFillerStyle, fillerStyle};
+    return fillerStyle;
   }, [marking]);
-
-  const renderFillers = () => {
-    if (marking) {
-      return (
-        <View style={[style.current.fillers, fillerStyles.fillerStyle]}>
-          <View style={[style.current.leftFiller, fillerStyles.leftFillerStyle]} />
-          <View style={[style.current.rightFiller, fillerStyles.rightFillerStyle]} />
-        </View>
-      );
-    }
-  };
 
   const _onPress = useCallback(() => {
     onPress?.(dateData);
@@ -225,14 +168,18 @@ const PeriodDay = (props: PeriodDayProps) => {
       accessibilityLabel={accessibilityLabel}
     >
       <View style={style.current.wrapper}>
-        {renderFillers()}
+        {marking?.color ? <View style={fillerStyle} /> : null}
         <View style={containerStyle}>
           <View style={selectedDayStyle} />
           <Text allowFontScaling={false} style={textStyle}>
             {String(children)}
           </Text>
           <View style={dotContainerStyle}>
-            <Dot theme={theme} color={marking?.dotColor} marked={marking?.marked} />
+            {marking?.dots?.map((dot, index) => {
+              if (index < 3) {
+                return <Dot theme={theme} color={dot.color} marked />;
+              }
+            })}
           </View>
         </View>
       </View>

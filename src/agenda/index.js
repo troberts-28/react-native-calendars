@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import XDate from 'xdate';
 import memoize from 'memoize-one';
 import React, { Component } from 'react';
-import { View, Dimensions, Animated } from 'react-native';
+import { View, Dimensions, Animated, } from 'react-native';
 import { extractCalendarListProps, extractReservationListProps } from '../componentUpdater';
 import { xdateToData, toMarkingFormat } from '../interface';
 import { sameDate, sameMonth } from '../dateutils';
@@ -14,8 +14,8 @@ import styleConstructor from './style';
 import WeekDaysNames from '../commons/WeekDaysNames';
 import CalendarList from '../calendar-list';
 import ReservationList from './reservation-list';
-const HEADER_HEIGHT = 104;
-const KNOB_HEIGHT = 24;
+const HEADER_HEIGHT = 115;
+const KNOB_HEIGHT = 26;
 /**
  * @description: Agenda component
  * @extends: CalendarList
@@ -102,7 +102,7 @@ export default class Agenda extends Component {
         return date ? new XDate(date) : new XDate(true);
     }
     calendarOffset() {
-        return 96 - this.viewHeight / 2;
+        return 100.5 - this.viewHeight / 2;
     }
     initialScrollPadPosition = () => {
         return Math.max(0, this.viewHeight - HEADER_HEIGHT);
@@ -238,14 +238,15 @@ export default class Agenda extends Component {
     renderReservations() {
         const reservationListProps = extractReservationListProps(this.props);
         if (isFunction(this.props.renderList)) {
-            return this.props.renderList({
+            return this.props.renderList?.({
                 ...reservationListProps,
                 selectedDay: this.state.selectedDay,
                 topDay: this.state.topDay,
                 onDayChange: this.onDayChange,
+                index: 0
             });
         }
-        return (<ReservationList {...reservationListProps} ref={this.list} selectedDay={this.state.selectedDay} topDay={this.state.topDay} onDayChange={this.onDayChange}/>);
+        return (<ReservationList {...reservationListProps} ref={this.list} selectedDay={this.state.selectedDay} topDay={this.state.topDay} onDayChange={this.onDayChange} index={0}/>);
     }
     renderCalendarList() {
         const { markedDates, items } = this.props;
@@ -258,14 +259,15 @@ export default class Agenda extends Component {
         let knob = <View style={this.style.knobContainer}/>;
         if (!hideKnob) {
             const knobView = renderKnob ? renderKnob() : <View style={this.style.knob}/>;
-            knob = !this.state.calendarScrollable || showClosingKnob ? (<View style={[this.style.knobContainer]}>
-          <View ref={this.knob}>{knobView}</View>
-        </View>) : null;
+            knob =
+                !this.state.calendarScrollable || showClosingKnob ? (<View style={[this.style.knobContainer]}>
+            <View ref={this.knob}>{knobView}</View>
+          </View>) : null;
         }
         return knob;
     }
     renderWeekDaysNames = () => {
-        return (<WeekDaysNames firstDay={this.props.firstDay} style={this.style.dayHeader}/>);
+        return <WeekDaysNames firstDay={this.props.firstDay} style={this.style.dayHeader}/>;
     };
     renderWeekNumbersSpace = () => {
         return this.props.showWeekNumbers && <View style={this.style.dayHeader}/>;
@@ -320,17 +322,17 @@ export default class Agenda extends Component {
         const scrollPadPosition = (shouldAllowDragging ? HEADER_HEIGHT : openCalendarScrollPadPosition) - KNOB_HEIGHT;
         const scrollPadStyle = {
             height: KNOB_HEIGHT,
-            top: scrollPadPosition,
+            top: scrollPadPosition
         };
         return (<View testID={testID} onLayout={this.onLayout} style={[style, this.style.container]}>
         <View style={this.style.reservations}>{this.renderReservations()}</View>
-        <Animated.View style={headerStyle}>
+        <Animated.View style={[headerStyle]}>
           <Animated.View style={[this.style.animatedContainer, { transform: [{ translateY: contentTranslate }] }]}>
             {this.renderCalendarList()}
           </Animated.View>
           {this.renderKnob()}
         </Animated.View>
-        <Animated.View style={weekdaysStyle}>
+        <Animated.View style={[weekdaysStyle]}>
           {this.renderWeekNumbersSpace()}
           {this.renderWeekDaysNames()}
         </Animated.View>

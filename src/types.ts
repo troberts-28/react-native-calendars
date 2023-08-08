@@ -18,6 +18,9 @@ export type DateData = {
   timestamp: number;
   dateString: string;
 };
+export type ChooseDateData = {
+  dateString: string;
+};
 export interface Theme {
   timelineContainer?: object;
   contentStyle?: ViewStyle;
