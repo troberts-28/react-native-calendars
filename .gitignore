@@ -5,6 +5,9 @@ yarn.lock
 .vscode
 package-lock.json
 dist
+src/**/*.js
+!src/**/*spec.js
+src/**/*.d.ts
 
 # OSX
 #
