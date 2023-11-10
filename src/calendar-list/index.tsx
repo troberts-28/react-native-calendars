@@ -259,7 +259,7 @@ const CalendarList = (props: CalendarListProps & ContextProp, ref: any) => {
             style={{
               height: calendarHeight,
               width: calendarWidth,
-              backgroundColor: '#EDEDED',
+              backgroundColor: 'transparent',
               justifyContent: 'center',
               alignItems: 'center'
             }}
@@ -277,7 +277,7 @@ const CalendarList = (props: CalendarListProps & ContextProp, ref: any) => {
             style={{
               height: calendarHeight,
               width: calendarWidth,
-              backgroundColor: '#EDEDED',
+              backgroundColor: 'transparent',
               justifyContent: 'center',
               alignItems: 'center'
             }}
