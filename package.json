@@ -10,6 +10,7 @@
     "build:dev": "tsc --noEmit",
     "build:docs": "node ./scripts/build-docs.js",
     "prepare": "npm run build:ts",
+    "prepack": "npm run build:ts",
     "e2e": "node ./scripts/test-e2e.js --release",
     "test": "npm run lint && npm run unit",
     "test:perf": "TEST_RUNNER_ARGS='--testMatch **/*.perf.js' reassure measure",
